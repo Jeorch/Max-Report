@@ -71,6 +71,46 @@ functions:
   http: GET
   args:
   - name
+- name: BmProductPortionHandler
+  create: NewBmProductPortionHandler
+  daemons:
+  - BmMongodbDaemon
+  method: ProductPortion
+  http: GET
+  args:
+  - name
+- name: BmVolumeTrendHandler
+  create: NewBmVolumeTrendHandler
+  daemons:
+  - BmMongodbDaemon
+  method: VolumeTrend
+  http: GET
+  args:
+  - name
+- name: BmVolumeCmpHandler
+  create: NewBmVolumeCmpHandler
+  daemons:
+  - BmMongodbDaemon
+  method: VolumeCmp
+  http: GET
+  args:
+  - name
+- name: BmPortionTrendHandler
+  create: NewBmPortionTrendHandler
+  daemons:
+  - BmMongodbDaemon
+  method: PortionTrend
+  http: GET
+  args:
+  - name
+- name: BmPortionCmpHandler
+  create: NewBmPortionCmpHandler
+  daemons:
+  - BmMongodbDaemon
+  method: PortionCmp
+  http: GET
+  args:
+  - name
 
 middlewares:
 - name: BmCheckTokenMiddleware
