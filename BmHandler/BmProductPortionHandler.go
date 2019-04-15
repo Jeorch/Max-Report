@@ -56,15 +56,18 @@ func (h ProductPortionHandler) NewBmProductPortionHandler(args ...interface{}) P
 func (h ProductPortionHandler) ProductPortion(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
 	w.Header().Add("Content-Type", "application/json")
 	in := BmModel.MarketDimension{}
-	//var out []BmModel.MarketDimension
-	var oneout BmModel.MarketDimension
+	var out []BmModel.MarketDimension
+	//var oneout BmModel.MarketDimension
 	jso := jsonapiobj.JsResult{}
-	//var sum float64
+	var sum float64
 	response := map[string]interface{}{
 		"status": "",
-		"sum": nil,
-		"same":  nil,
-		"ring":  nil,
+		"first": nil,
+		"second":  nil,
+		"third":  nil,
+		"forth":  nil,
+		"fifth":  nil,
+		"others":  nil,
 		"error":  nil,
 	}
 
@@ -73,39 +76,23 @@ func (h ProductPortionHandler) ProductPortion(w http.ResponseWriter, r *http.Req
 	n := tm.Year()
 	y := tm.Month()
 
-	//本年
+	//同年同月多个市场
 	ps := fmt.Sprintf("%d-%02d", n,y)
-	cond := bson.M{"ym": ps}
-	err := h.db.FindOneByCondition(&in,&oneout,cond)
+	condtmp := bson.M{"ym": ps}
+	err := h.db.FindMultiByCondition(&in,&out,condtmp,"-product-count",-1,-1)
 	if err != nil{
 		return 0
 	}
-	Product_Count := oneout.Product_Count
-	response["sum"] = fmt.Sprintf("%f", Product_Count)
-	
-	//同比 
-	ln:=n-1
-	lps := fmt.Sprintf("%d-%02d", ln,y)
-	if len(r.Header["Market"][0])<=0{
-		return 0
+	for _,mark:=range out{
+		sum+=mark.Sales
 	}
-	cond = bson.M{"ym": lps,"market":r.Header["Market"][0]}
-	err = h.db.FindOneByCondition(&in,&oneout,cond)
-	if err != nil{
-		return 0
-	}
-	same := Product_Count/oneout.Product_Count
-	response["same"] = fmt.Sprintf("%f", same)
-	//环比
-	ly := y-1
-	lps = fmt.Sprintf("%d-%02d", n,ly)
-	cond = bson.M{"ym": lps,"market":r.Header["Market"][0]}
-	err = h.db.FindOneByCondition(&in,&oneout,cond)
-	if err != nil{
-		return 0
-	}
-	ring := Product_Count/oneout.Product_Count
-	response["ring"] = fmt.Sprintf("%f", ring)
+	response["first"] = fmt.Sprintf("%f", out[0].Sales/sum)
+	response["second"] = fmt.Sprintf("%f", out[1].Sales/sum)
+	response["third"] = fmt.Sprintf("%f", out[2].Sales/sum)
+	response["forth"] = fmt.Sprintf("%f", out[3].Sales/sum)
+	response["fifth"] = fmt.Sprintf("%f", out[4].Sales/sum)
+	other := 1-out[0].Sales/sum-out[1].Sales/sum-out[2].Sales/sum-out[3].Sales/sum-out[4].Sales/sum
+	response["others"] = fmt.Sprintf("%f", other)
 	response["status"] = "ok"
 	jso.Obj = response
 	enc := json.NewEncoder(w)
