@@ -16,14 +16,14 @@ import (
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
 	"github.com/julienschmidt/httprouter"
 )
-type ProductCountHandler struct {
+type MarketScopeTrendHandler struct {
 	Method     string
 	HttpMethod string
 	Args       []string
 	db         *BmMongodb.BmMongodb
 }
 
-func (h ProductCountHandler) NewBmProductCountHandler(args ...interface{}) ProductCountHandler {
+func (h MarketScopeTrendHandler) NewBmMarketScopeTrendHandler(args ...interface{}) MarketScopeTrendHandler {
 	var m *BmMongodb.BmMongodb
 	var hm string
 	var md string
@@ -50,21 +50,20 @@ func (h ProductCountHandler) NewBmProductCountHandler(args ...interface{}) Produ
 		} else {
 		}
 	}
-	return ProductCountHandler{Method: md, HttpMethod: hm, Args: ag, db: m}
+	return MarketScopeTrendHandler{Method: md, HttpMethod: hm, Args: ag, db: m}
 }
 
-func (h ProductCountHandler) ProductCount(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
+func (h MarketScopeTrendHandler) MarketScopeTrend(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
 	w.Header().Add("Content-Type", "application/json")
 	in := BmModel.MarketDimension{}
-	//var out []BmModel.MarketDimension
+	var results []string
+	var out []BmModel.MarketDimension
 	var oneout BmModel.MarketDimension
 	jso := jsonapiobj.JsResult{}
-	//var sum float64
+	var sum float64
 	response := map[string]interface{}{
 		"status": "",
-		"sum": nil,
-		"same":  nil,
-		"ring":  nil,
+		"result": nil,
 		"error":  nil,
 	}
 
@@ -73,51 +72,44 @@ func (h ProductCountHandler) ProductCount(w http.ResponseWriter, r *http.Request
 	n := tm.Year()
 	y := tm.Month()
 
-	//本年
-	ps := fmt.Sprintf("%d-%02d", n,y)
-	cond := bson.M{"ym": ps}
-	err := h.db.FindOneByCondition(&in,&oneout,cond)
-	if err != nil{
-		return 0
+	for i := 0;i<13;i++{
+		//同年同月多个市场
+		ps := fmt.Sprintf("%d-%02d", n,y)
+		condtmp := bson.M{"ym": ps}
+		err := h.db.FindMultiByCondition(&in,&out,condtmp,"-sales",0,10)
+		if err != nil{
+			return 0
+		}
+		for _,mark:=range out{
+			sum+=mark.Sales
+		}
+		cond := bson.M{"ym": ps,"market":r.Header["Market"][0]}
+		err = h.db.FindOneByCondition(&in,&oneout,cond)
+		if err != nil{
+			return 0
+		}
+		sale := oneout.Sales
+		this := sale/sum
+		sum=0
+		tmpresult:=fmt.Sprintf("%f", this)
+		results=append(results,tmpresult)
+		y--
 	}
-	Product_Count := oneout.Product_Count
-	response["sum"] = fmt.Sprintf("%f", Product_Count)
-	
-	//同比 
-	ln:=n-1
-	lps := fmt.Sprintf("%d-%02d", ln,y)
-	if len(r.Header["Market"][0])<=0{
-		return 0
-	}
-	cond = bson.M{"ym": lps,"market":r.Header["Market"][0]}
-	err = h.db.FindOneByCondition(&in,&oneout,cond)
-	if err != nil{
-		return 0
-	}
-	same := Product_Count/oneout.Product_Count
-	response["same"] = fmt.Sprintf("%f", same)
-	//环比
-	ly := y-1
-	lps = fmt.Sprintf("%d-%02d", n,ly)
-	cond = bson.M{"ym": lps,"market":r.Header["Market"][0]}
-	err = h.db.FindOneByCondition(&in,&oneout,cond)
-	if err != nil{
-		return 0
-	}
-	ring := Product_Count/oneout.Product_Count
-	response["ring"] = fmt.Sprintf("%f", ring)
+
 	response["status"] = "ok"
+	response["result"] = results
 	jso.Obj = response
 	enc := json.NewEncoder(w)
 	enc.Encode(jso.Obj)
 	return 0
 }
 
-func (h ProductCountHandler) GetHttpMethod() string {
+func (h MarketScopeTrendHandler) GetHttpMethod() string {
 	return h.HttpMethod
 }
 
-func (h ProductCountHandler) GetHandlerMethod() string {
+func (h MarketScopeTrendHandler) GetHandlerMethod() string {
 	return h.Method
 }
+
 

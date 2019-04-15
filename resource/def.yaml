@@ -47,6 +47,30 @@ functions:
   http: GET
   args:
   - name
+- name: BmMarketRatioHandler
+  create: NewBmMarketRatioHandler
+  daemons:
+  - BmMongodbDaemon
+  method: MarketRatio
+  http: GET
+  args:
+  - name
+- name: BmMaxPortionHandler
+  create: NewBmMaxPortionHandler
+  daemons:
+  - BmMongodbDaemon
+  method: MaxPortion
+  http: GET
+  args:
+  - name
+- name: BmMarketScopeTrendHandler
+  create: NewBmMarketScopeTrendHandler
+  daemons:
+  - BmMongodbDaemon
+  method: MarketScopeTrend
+  http: GET
+  args:
+  - name
 
 middlewares:
 - name: BmCheckTokenMiddleware

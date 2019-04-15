@@ -62,7 +62,9 @@ func (h MarketScopeHandler) MarketScope(w http.ResponseWriter, r *http.Request, 
 	var sum float64
 	response := map[string]interface{}{
 		"status": "",
-		"result": nil,
+		"sum": nil,
+		"same":  nil,
+		"ring":  nil,
 		"error":  nil,
 	}
 
@@ -74,7 +76,7 @@ func (h MarketScopeHandler) MarketScope(w http.ResponseWriter, r *http.Request, 
 	//同年同月多个市场
 	ps := fmt.Sprintf("%d-%02d", n,y)
 	condtmp := bson.M{"ym": ps}
-	err := h.db.FindMultiByCondition(&in,&out,condtmp,"")
+	err := h.db.FindMultiByCondition(&in,&out,condtmp,"",-1,-1)
 	if err != nil{
 		return 0
 	}
@@ -88,13 +90,14 @@ func (h MarketScopeHandler) MarketScope(w http.ResponseWriter, r *http.Request, 
 	}
 	sale := oneout.Sales
 	this := sale/sum
+	response["sum"] = fmt.Sprintf("%f", this)
 	sum=0
 
 	//同比 
 	ln:=n-1
 	lps := fmt.Sprintf("%d-%02d", ln,y)
 	condtmp = bson.M{"ym": lps}
-	err = h.db.FindMultiByCondition(&in,&out,condtmp,"")
+	err = h.db.FindMultiByCondition(&in,&out,condtmp,"",-1,-1)
 	if err != nil{
 		return 0
 	}
@@ -112,13 +115,14 @@ func (h MarketScopeHandler) MarketScope(w http.ResponseWriter, r *http.Request, 
 	sale = oneout.Sales
 	last := sale/sum
 	same := this/last
+	response["same"] = fmt.Sprintf("%f", same)
 	sum=0
 
 	//环比
 	ly := y-1
 	lps = fmt.Sprintf("%d-%02d", n,ly)
 	condtmp = bson.M{"ym": lps}
-	err = h.db.FindMultiByCondition(&in,&out,condtmp,"")
+	err = h.db.FindMultiByCondition(&in,&out,condtmp,"",-1,-1)
 	if err != nil{
 		return 0
 	}
@@ -127,22 +131,19 @@ func (h MarketScopeHandler) MarketScope(w http.ResponseWriter, r *http.Request, 
 	}
 	cond = bson.M{"ym": lps,"market":r.Header["Market"][0]}
 	err = h.db.FindOneByCondition(&in,&oneout,cond)
-	sale = oneout.Sales
 	if err != nil{
 		return 0
 	}
+	sale = oneout.Sales
 	last = sale/sum
 	ring := this/last
-
-	result := this + same +ring
-	results:=fmt.Sprintf("%f", result)
+	response["ring"] = fmt.Sprintf("%f", ring)
 	
 	if err != nil && err.Error() == "not found" {
 		return 0
 	}
 
 	response["status"] = "ok"
-	response["result"] = results
 	jso.Obj = response
 	enc := json.NewEncoder(w)
 	enc.Encode(jso.Obj)

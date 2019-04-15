@@ -39,6 +39,9 @@ var BLACKMIRROR_DAEMON_FACTORY = map[string]interface{}{
 var BLACKMIRROR_FUNCTION_FACTORY = map[string]interface{}{
 	"BmMarketScopeHandler":     	   BmHandler.MarketScopeHandler{},
 	"BmProductCountHandler":     	   BmHandler.ProductCountHandler{},
+	"BmMarketRatioHandler":     	   BmHandler.MarketRatioHandler{},
+	"BmMaxPortionHandler":     	   	   BmHandler.MaxPortionHandler{},
+	"BmMarketScopeTrendHandler":       BmHandler.MarketScopeTrendHandler{},
 }
 
 
