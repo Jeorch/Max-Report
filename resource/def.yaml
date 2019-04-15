@@ -1,0 +1,76 @@
+storages:
+- name: BmMarketDimensionStorage
+  method: NewMarketDimensionStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmProductDimensionStorage
+  method: NewProductDimensionStorage
+  daemons:
+  - BmMongodbDaemon
+
+resources:
+- name: BmMarketDimensionResource
+  method: NewMarketDimensionResource
+  storages:
+  - BmMarketDimensionStorage
+- name: BmProductDimensionResource
+  method: NewProductDimensionResource
+  storages:
+  - BmProductDimensionStorage
+
+models:
+- MarketDimension
+- ProductDimension
+
+services:
+- name: bm-marketdimension
+  model: BmMarketDimension
+  resource: BmMarketDimensionResource
+- name: bm-productdimension
+  model: BmProductDimension
+  resource: BmProductDimensionResource
+
+functions:
+- name: BmMarketScopeHandler
+  create: NewBmMarketScopeHandler
+  daemons:
+  - BmMongodbDaemon
+  method: MarketScope
+  http: GET
+  args:
+  - name
+- name: BmProductCountHandler
+  create: NewBmProductCountHandler
+  daemons:
+  - BmMongodbDaemon
+  method: ProductCount
+  http: GET
+  args:
+  - name
+
+middlewares:
+- name: BmCheckTokenMiddleware
+  create: NewCheckTokenMiddleware
+  daemons:
+  - BmRedisDaemon
+  args:
+  - 192.168.100.116:9096
+
+panic:
+  name: BmCommonPanicHandle
+  create: NewCommonPanicHandle
+
+daemons:
+- name: BmMongodbDaemon
+  method: NewMongoDBDaemon
+  args:
+    host: 192.168.100.174
+    port: 27017
+    database: pharbers-max-bi
+- name: BmRedisDaemon
+  method: NewRedisDBDaemon
+  args:
+    host: 192.168.100.174
+    port: 6379
+    password:
+    database: 0
