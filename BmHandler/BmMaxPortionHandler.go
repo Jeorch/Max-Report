@@ -3,14 +3,11 @@ package BmHandler
 import (
 	"encoding/json"
 	"fmt"
-	//"io/ioutil"
 	"net/http"
 	"github.com/alfredyang1986/blackmirror/jsonapi/jsonapiobj"
 	"reflect"
-	//"strings"
 	"gopkg.in/mgo.v2/bson"
-	//"github.com/manyminds/api2go"
-	"time"
+	"strconv"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
@@ -56,10 +53,11 @@ func (h MaxPortionHandler) NewBmMaxPortionHandler(args ...interface{}) MaxPortio
 func (h MaxPortionHandler) MaxPortion(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
 	w.Header().Add("Content-Type", "application/json")
 	in := BmModel.MarketDimension{}
-	var out []BmModel.MarketDimension
+	proin :=  BmModel.ProductDimension{}
+	var out    []BmModel.MarketDimension
+	var proout []BmModel.ProductDimension
 	//var oneout BmModel.MarketDimension
 	jso := jsonapiobj.JsResult{}
-	var sum float64
 	response := map[string]interface{}{
 		"status": "",
 		"sum": nil,
@@ -68,25 +66,19 @@ func (h MaxPortionHandler) MaxPortion(w http.ResponseWriter, r *http.Request, _ 
 		"error":  nil,
 	}
 
-	t := time.Now()
-	tm := t.UTC()
-	n := tm.Year()
-	y := tm.Month()
-
+	n,_ := strconv.Atoi(r.Header["Ym"][0][:4])
+	y,_:= strconv.Atoi(r.Header["Ym"][0][6:8])
 	//本年
 	ps := fmt.Sprintf("%d-%02d", n,y)
 	condtmp := bson.M{"ym": ps}
-	err := h.db.FindMultiByCondition(&in,&out,condtmp,"-sales",-1,-1)
+	err := h.db.FindMultiByCondition(&in,&out,condtmp,"-sales",0,1)
 	if err != nil{
 		return 0
 	}
 	this := out[0].Sales
-	for _,mark:=range out{
-		sum+=mark.Sales
-	}
-	this = this/sum
+	err = h.db.FindMultiByCondition(&proin,&proout,condtmp,"-sales",0,1)
+	this = this/proout[0].Sales
 	response["sum"] = fmt.Sprintf("%f", this)
-	sum=0
 	
 	//同比 
 	ln:=n-1
@@ -95,17 +87,15 @@ func (h MaxPortionHandler) MaxPortion(w http.ResponseWriter, r *http.Request, _ 
 		return 0
 	}
 	condtmp = bson.M{"ym": lps}
-	err = h.db.FindMultiByCondition(&in,&out,condtmp,"-sales",-1,-1)
+	err = h.db.FindMultiByCondition(&in,&out,condtmp,"-sales",0,1)
 	if err != nil{
 		return 0
 	}
 	same := out[0].Sales
-	for _,mark:=range out{
-		sum+=mark.Sales
-	}
-	same = same/sum
+	err = h.db.FindMultiByCondition(&proin,&proout,condtmp,"-sales",0,1)
+	same = same/proout[0].Sales
+	same = this/same
 	response["same"] = fmt.Sprintf("%f", same)
-	sum=0
 
 	//环比
 	ly := y-1
@@ -116,11 +106,11 @@ func (h MaxPortionHandler) MaxPortion(w http.ResponseWriter, r *http.Request, _ 
 		return 0
 	}
 	ring := out[0].Sales
-	for _,mark:=range out{
-		sum+=mark.Sales
-	}
-	ring = ring/sum
+	err = h.db.FindMultiByCondition(&proin,&proout,condtmp,"-sales",0,1)
+	ring = ring/proout[0].Sales
+	ring = this/ring
 	response["ring"] = fmt.Sprintf("%f", ring)
+
 	response["status"] = "ok"
 	jso.Obj = response
 	enc := json.NewEncoder(w)

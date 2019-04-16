@@ -3,14 +3,11 @@ package BmHandler
 import (
 	"encoding/json"
 	"fmt"
-	//"io/ioutil"
 	"net/http"
 	"github.com/alfredyang1986/blackmirror/jsonapi/jsonapiobj"
 	"reflect"
-	//"strings"
 	"gopkg.in/mgo.v2/bson"
-	//"github.com/manyminds/api2go"
-	"time"
+	"strconv"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
@@ -68,10 +65,8 @@ func (h ProductCountHandler) ProductCount(w http.ResponseWriter, r *http.Request
 		"error":  nil,
 	}
 
-	t := time.Now()
-	tm := t.UTC()
-	n := tm.Year()
-	y := tm.Month()
+	n,_ := strconv.Atoi(r.Header["Ym"][0][:4])
+	y,_:= strconv.Atoi(r.Header["Ym"][0][6:8])
 
 	//本年
 	ps := fmt.Sprintf("%d-%02d", n,y)

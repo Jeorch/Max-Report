@@ -3,20 +3,17 @@ package BmHandler
 import (
 	"encoding/json"
 	"fmt"
-	//"io/ioutil"
 	"net/http"
 	"github.com/alfredyang1986/blackmirror/jsonapi/jsonapiobj"
 	"reflect"
-	//"strings"
 	"gopkg.in/mgo.v2/bson"
-	//"github.com/manyminds/api2go"
-	"time"
+	"strconv"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
 	"github.com/julienschmidt/httprouter"
 )
-type VolumeTrendHandler struct {
+type VolumeTrendHandler struct {  //销售额趋势
 	Method     string
 	HttpMethod string
 	Args       []string
@@ -55,57 +52,58 @@ func (h VolumeTrendHandler) NewBmVolumeTrendHandler(args ...interface{}) VolumeT
 
 func (h VolumeTrendHandler) VolumeTrend(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
 	w.Header().Add("Content-Type", "application/json")
-	in := BmModel.MarketDimension{}
-	//var out []BmModel.MarketDimension
-	var oneout BmModel.MarketDimension
+	proin :=  BmModel.ProductDimension{}
+	//var out    []BmModel.MarketDimension
+	var proout []BmModel.ProductDimension
 	jso := jsonapiobj.JsResult{}
-	//var sum float64
+	var sum float64
 	response := map[string]interface{}{
 		"status": "",
 		"sum": nil,
-		"same":  nil,
 		"ring":  nil,
 		"error":  nil,
 	}
 
-	t := time.Now()
-	tm := t.UTC()
-	n := tm.Year()
-	y := tm.Month()
+	n,_ := strconv.Atoi(r.Header["Ym"][0][:4])
+	y,_:= strconv.Atoi(r.Header["Ym"][0][6:8])
+	var thisresult []string
+	var ringresult []string
+	for i:=0;i<13;i++{
+		//本年
+		//同年同月多个市场
+		ps := fmt.Sprintf("%d-%02d", n,y)
+		condtmp := bson.M{"ym": ps}
 
-	//本年
-	ps := fmt.Sprintf("%d-%02d", n,y)
-	cond := bson.M{"ym": ps}
-	err := h.db.FindOneByCondition(&in,&oneout,cond)
-	if err != nil{
-		return 0
+		err := h.db.FindMultiByCondition(&proin,&proout,condtmp,"-sales",0,10)
+		if err != nil{
+			return 0
+		}
+		for _,mark:=range proout{
+			sum+=mark.Sales
+		}
+		this := sum
+		thisresult = append(thisresult,fmt.Sprintf("%f", this))
+		sum=0
+
+		//环比
+		ly := y-1
+		lps := fmt.Sprintf("%d-%02d", n,ly)
+		condtmp = bson.M{"ym": lps}
+		err = h.db.FindMultiByCondition(&proin,&proout,condtmp,"-sales",0,10)
+		if err != nil{
+			return 0
+		}
+		for _,mark:=range proout{
+			sum+=mark.Sales
+		}
+		ring := sum
+		ring = this/ring
+		ringresult = append(ringresult,fmt.Sprintf("%f", ring))
+		sum=0
+		y--
 	}
-	Product_Count := oneout.Product_Count
-	response["sum"] = fmt.Sprintf("%f", Product_Count)
-	
-	//同比 
-	ln:=n-1
-	lps := fmt.Sprintf("%d-%02d", ln,y)
-	if len(r.Header["Market"][0])<=0{
-		return 0
-	}
-	cond = bson.M{"ym": lps,"market":r.Header["Market"][0]}
-	err = h.db.FindOneByCondition(&in,&oneout,cond)
-	if err != nil{
-		return 0
-	}
-	same := Product_Count/oneout.Product_Count
-	response["same"] = fmt.Sprintf("%f", same)
-	//环比
-	ly := y-1
-	lps = fmt.Sprintf("%d-%02d", n,ly)
-	cond = bson.M{"ym": lps,"market":r.Header["Market"][0]}
-	err = h.db.FindOneByCondition(&in,&oneout,cond)
-	if err != nil{
-		return 0
-	}
-	ring := Product_Count/oneout.Product_Count
-	response["ring"] = fmt.Sprintf("%f", ring)
+	response["sum"] = thisresult
+	response["ring"] = ringresult
 	response["status"] = "ok"
 	jso.Obj = response
 	enc := json.NewEncoder(w)

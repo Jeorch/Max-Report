@@ -3,14 +3,11 @@ package BmHandler
 import (
 	"encoding/json"
 	"fmt"
-	//"io/ioutil"
 	"net/http"
 	"github.com/alfredyang1986/blackmirror/jsonapi/jsonapiobj"
 	"reflect"
-	//"strings"
+	"strconv"
 	"gopkg.in/mgo.v2/bson"
-	//"github.com/manyminds/api2go"
-	"time"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
@@ -67,10 +64,8 @@ func (h MarketScopeTrendHandler) MarketScopeTrend(w http.ResponseWriter, r *http
 		"error":  nil,
 	}
 
-	t := time.Now()
-	tm := t.UTC()
-	n := tm.Year()
-	y := tm.Month()
+	n,_ := strconv.Atoi(r.Header["Ym"][0][:4])
+	y,_:= strconv.Atoi(r.Header["Ym"][0][5:7])
 
 	for i := 0;i<13;i++{
 		//同年同月多个市场
