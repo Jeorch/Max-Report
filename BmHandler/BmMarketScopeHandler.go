@@ -69,7 +69,7 @@ func (h MarketScopeHandler) MarketScope(w http.ResponseWriter, r *http.Request, 
 
 	//同年同月多个市场
 	ps := fmt.Sprintf("%d-%02d", n,y)
-	condtmp := bson.M{"ym": ps}
+	condtmp := bson.M{"ym": ps,"company-id":r.Header["company-id"][0]}
 	err := h.db.FindMultiByCondition(&in,&out,condtmp,"",-1,-1)
 	if err != nil{
 		return 0

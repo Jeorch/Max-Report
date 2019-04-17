@@ -68,7 +68,7 @@ func (h MarketRatioHandler) MarketRatio(w http.ResponseWriter, r *http.Request, 
 	}
 
 	n,_ := strconv.Atoi(r.Header["Ym"][0][:4])
-	y,_:= strconv.Atoi(r.Header["Ym"][0][6:8])
+	y,_:= strconv.Atoi(r.Header["Ym"][0][4:6])
 
 	//同年同月多个市场
 	ps := fmt.Sprintf("%d-%02d", n,y)

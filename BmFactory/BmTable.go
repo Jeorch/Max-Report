@@ -47,6 +47,7 @@ var BLACKMIRROR_FUNCTION_FACTORY = map[string]interface{}{
 	"BmVolumeCmpHandler":     	   	   BmHandler.VolumeCmpHandler{},
 	"BmPortionCmpHandler":     	   	   BmHandler.PortionCmpHandler{},
 	"BmPortionTrendHandler":     	   BmHandler.PortionTrendHandler{},
+	"BmGetMarketHandler":     	   	   BmHandler.GetMarketHandler{},
 }
 
 
