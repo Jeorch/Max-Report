@@ -11,23 +11,23 @@ import (
 	"github.com/manyminds/api2go"
 )
 
-// BmMarketDimensionStorage stores all MarketDimensiones
-type BmMarketDimensionStorage struct {
+// BmMarketdimensionStorage stores all Marketdimensiones
+type BmMarketdimensionStorage struct {
 	db *BmMongodb.BmMongodb
 }
 
-func (s BmMarketDimensionStorage) NewMarketDimensionStorage(args []BmDaemons.BmDaemon) *BmMarketDimensionStorage {
+func (s BmMarketdimensionStorage) NewMarketdimensionStorage(args []BmDaemons.BmDaemon) *BmMarketdimensionStorage {
 	mdb := args[0].(*BmMongodb.BmMongodb)
-	return &BmMarketDimensionStorage{mdb}
+	return &BmMarketdimensionStorage{mdb}
 }
 
 // GetAll returns the model map (because we need the ID as key too)
-func (s BmMarketDimensionStorage) GetAll(r api2go.Request, skip int, take int) []*BmModel.MarketDimension {
-	in := BmModel.MarketDimension{}
-	var out []BmModel.MarketDimension
+func (s BmMarketdimensionStorage) GetAll(r api2go.Request, skip int, take int) []*BmModel.Marketdimension {
+	in := BmModel.Marketdimension{}
+	var out []BmModel.Marketdimension
 	err := s.db.FindMulti(r, &in, &out, skip, take)
 	if err == nil {
-		var tmp []*BmModel.MarketDimension
+		var tmp []*BmModel.Marketdimension
 		for i := 0; i < len(out); i++ {
 			ptr := out[i]
 			s.db.ResetIdWithId_(&ptr)
@@ -35,24 +35,24 @@ func (s BmMarketDimensionStorage) GetAll(r api2go.Request, skip int, take int) [
 		}
 		return tmp
 	} else {
-		return nil //make(map[string]*BmModel.MarketDimension)
+		return nil //make(map[string]*BmModel.Marketdimension)
 	}
 }
 
 // GetOne model
-func (s BmMarketDimensionStorage) GetOne(id string) (BmModel.MarketDimension, error) {
-	in := BmModel.MarketDimension{ID: id}
-	model := BmModel.MarketDimension{ID: id}
+func (s BmMarketdimensionStorage) GetOne(id string) (BmModel.Marketdimension, error) {
+	in := BmModel.Marketdimension{ID: id}
+	model := BmModel.Marketdimension{ID: id}
 	err := s.db.FindOne(&in, &model)
 	if err == nil {
 		return model, nil
 	}
-	errMessage := fmt.Sprintf("MarketDimension for id %s not found", id)
-	return BmModel.MarketDimension{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
+	errMessage := fmt.Sprintf("Marketdimension for id %s not found", id)
+	return BmModel.Marketdimension{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
 }
 
 // Insert a model
-func (s *BmMarketDimensionStorage) Insert(c BmModel.MarketDimension) string {
+func (s *BmMarketdimensionStorage) Insert(c BmModel.Marketdimension) string {
 	tmp, err := s.db.InsertBmObject(&c)
 	if err != nil {
 		fmt.Println(err)
@@ -62,27 +62,27 @@ func (s *BmMarketDimensionStorage) Insert(c BmModel.MarketDimension) string {
 }
 
 // Delete one :(
-func (s *BmMarketDimensionStorage) Delete(id string) error {
-	in := BmModel.MarketDimension{ID: id}
+func (s *BmMarketdimensionStorage) Delete(id string) error {
+	in := BmModel.Marketdimension{ID: id}
 	err := s.db.Delete(&in)
 	if err != nil {
-		return fmt.Errorf("MarketDimension with id %s does not exist", id)
+		return fmt.Errorf("Marketdimension with id %s does not exist", id)
 	}
 
 	return nil
 }
 
 // Update a model
-func (s *BmMarketDimensionStorage) Update(c BmModel.MarketDimension) error {
+func (s *BmMarketdimensionStorage) Update(c BmModel.Marketdimension) error {
 	err := s.db.Update(&c)
 	if err != nil {
-		return fmt.Errorf("MarketDimension with id does not exist")
+		return fmt.Errorf("Marketdimension with id does not exist")
 	}
 
 	return nil
 }
 
-func (s *BmMarketDimensionStorage) Count(req api2go.Request, c BmModel.MarketDimension) int {
+func (s *BmMarketdimensionStorage) Count(req api2go.Request, c BmModel.Marketdimension) int {
 	r, _ := s.db.Count(req, &c)
 	return r
 }

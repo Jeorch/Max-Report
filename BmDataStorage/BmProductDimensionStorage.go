@@ -11,23 +11,23 @@ import (
 	"github.com/manyminds/api2go"
 )
 
-// BmProductDimensionStorage stores all ProductDimensiones
-type BmProductDimensionStorage struct {
+// BmProductdimensionStorage stores all Productdimensiones
+type BmProductdimensionStorage struct {
 	db *BmMongodb.BmMongodb
 }
 
-func (s BmProductDimensionStorage) NewProductDimensionStorage(args []BmDaemons.BmDaemon) *BmProductDimensionStorage {
+func (s BmProductdimensionStorage) NewProductdimensionStorage(args []BmDaemons.BmDaemon) *BmProductdimensionStorage {
 	mdb := args[0].(*BmMongodb.BmMongodb)
-	return &BmProductDimensionStorage{mdb}
+	return &BmProductdimensionStorage{mdb}
 }
 
 // GetAll returns the model map (because we need the ID as key too)
-func (s BmProductDimensionStorage) GetAll(r api2go.Request, skip int, take int) []*BmModel.ProductDimension {
-	in := BmModel.ProductDimension{}
-	var out []BmModel.ProductDimension
+func (s BmProductdimensionStorage) GetAll(r api2go.Request, skip int, take int) []*BmModel.Productdimension {
+	in := BmModel.Productdimension{}
+	var out []BmModel.Productdimension
 	err := s.db.FindMulti(r, &in, &out, skip, take)
 	if err == nil {
-		var tmp []*BmModel.ProductDimension
+		var tmp []*BmModel.Productdimension
 		for i := 0; i < len(out); i++ {
 			ptr := out[i]
 			s.db.ResetIdWithId_(&ptr)
@@ -35,24 +35,24 @@ func (s BmProductDimensionStorage) GetAll(r api2go.Request, skip int, take int) 
 		}
 		return tmp
 	} else {
-		return nil //make(map[string]*BmModel.ProductDimension)
+		return nil //make(map[string]*BmModel.Productdimension)
 	}
 }
 
 // GetOne model
-func (s BmProductDimensionStorage) GetOne(id string) (BmModel.ProductDimension, error) {
-	in := BmModel.ProductDimension{ID: id}
-	model := BmModel.ProductDimension{ID: id}
+func (s BmProductdimensionStorage) GetOne(id string) (BmModel.Productdimension, error) {
+	in := BmModel.Productdimension{ID: id}
+	model := BmModel.Productdimension{ID: id}
 	err := s.db.FindOne(&in, &model)
 	if err == nil {
 		return model, nil
 	}
-	errMessage := fmt.Sprintf("ProductDimension for id %s not found", id)
-	return BmModel.ProductDimension{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
+	errMessage := fmt.Sprintf("Productdimension for id %s not found", id)
+	return BmModel.Productdimension{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
 }
 
 // Insert a model
-func (s *BmProductDimensionStorage) Insert(c BmModel.ProductDimension) string {
+func (s *BmProductdimensionStorage) Insert(c BmModel.Productdimension) string {
 	tmp, err := s.db.InsertBmObject(&c)
 	if err != nil {
 		fmt.Println(err)
@@ -62,27 +62,27 @@ func (s *BmProductDimensionStorage) Insert(c BmModel.ProductDimension) string {
 }
 
 // Delete one :(
-func (s *BmProductDimensionStorage) Delete(id string) error {
-	in := BmModel.ProductDimension{ID: id}
+func (s *BmProductdimensionStorage) Delete(id string) error {
+	in := BmModel.Productdimension{ID: id}
 	err := s.db.Delete(&in)
 	if err != nil {
-		return fmt.Errorf("ProductDimension with id %s does not exist", id)
+		return fmt.Errorf("Productdimension with id %s does not exist", id)
 	}
 
 	return nil
 }
 
 // Update a model
-func (s *BmProductDimensionStorage) Update(c BmModel.ProductDimension) error {
+func (s *BmProductdimensionStorage) Update(c BmModel.Productdimension) error {
 	err := s.db.Update(&c)
 	if err != nil {
-		return fmt.Errorf("ProductDimension with id does not exist")
+		return fmt.Errorf("Productdimension with id does not exist")
 	}
 
 	return nil
 }
 
-func (s *BmProductDimensionStorage) Count(req api2go.Request, c BmModel.ProductDimension) int {
+func (s *BmProductdimensionStorage) Count(req api2go.Request, c BmModel.Productdimension) int {
 	r, _ := s.db.Count(req, &c)
 	return r
 }

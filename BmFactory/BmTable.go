@@ -13,18 +13,18 @@ import (
 type BmTable struct{}
 
 var BLACKMIRROR_MODEL_FACTORY = map[string]interface{}{
-	"BmProductDimension":                BmModel.ProductDimension{},
-	"BmMarketDimension":                 BmModel.MarketDimension{},
+	"BmProductdimension":                BmModel.Productdimension{},
+	"BmMarketdimension":                 BmModel.Marketdimension{},
 }
 
 var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
-	"BmProductDimensionResource":               BmResource.BmProductDimensionResource{},
-	"BmMarketDimensionResource":                BmResource.BmMarketDimensionResource{},
+	"BmProductdimensionResource":               BmResource.BmProductdimensionResource{},
+	"BmMarketdimensionResource":                BmResource.BmMarketdimensionResource{},
 }
 
 var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
-	"BmProductDimensionStorage":               BmDataStorage.BmProductDimensionStorage{},
-	"BmMarketDimensionStorage":                BmDataStorage.BmMarketDimensionStorage{},
+	"BmProductdimensionStorage":               BmDataStorage.BmProductdimensionStorage{},
+	"BmMarketdimensionStorage":                BmDataStorage.BmMarketdimensionStorage{},
 }
 
 var BLACKMIRROR_MIDDLEWARE_FACTORY = map[string]interface{}{
@@ -37,17 +37,7 @@ var BLACKMIRROR_DAEMON_FACTORY = map[string]interface{}{
 }
 
 var BLACKMIRROR_FUNCTION_FACTORY = map[string]interface{}{
-	"BmMarketScopeHandler":     	   BmHandler.MarketScopeHandler{},
-	"BmProductCountHandler":     	   BmHandler.ProductCountHandler{},
-	"BmMarketRatioHandler":     	   BmHandler.MarketRatioHandler{},
-	"BmMaxPortionHandler":     	   	   BmHandler.MaxPortionHandler{},
-	"BmMarketScopeTrendHandler":       BmHandler.MarketScopeTrendHandler{},
-	"BmProductPortionHandler":     	   BmHandler.ProductPortionHandler{},
-	"BmVolumeTrendHandler":     	   BmHandler.VolumeTrendHandler{},
-	"BmVolumeCmpHandler":     	   	   BmHandler.VolumeCmpHandler{},
-	"BmPortionCmpHandler":     	   	   BmHandler.PortionCmpHandler{},
-	"BmPortionTrendHandler":     	   BmHandler.PortionTrendHandler{},
-	"BmGetMarketHandler":     	   	   BmHandler.GetMarketHandler{},
+	 "BmListHandler":     	   BmHandler.ListHandler{},
 }
 
 

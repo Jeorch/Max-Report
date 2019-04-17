@@ -1,122 +1,42 @@
 storages:
-- name: BmMarketDimensionStorage
-  method: NewMarketDimensionStorage
+- name: BmMarketdimensionStorage
+  method: NewMarketdimensionStorage
   daemons:
   - BmMongodbDaemon
-- name: BmProductDimensionStorage
-  method: NewProductDimensionStorage
+- name: BmProductdimensionStorage
+  method: NewProductdimensionStorage
   daemons:
   - BmMongodbDaemon
 
 resources:
-- name: BmMarketDimensionResource
-  method: NewMarketDimensionResource
+- name: BmMarketdimensionResource
+  method: NewMarketdimensionResource
   storages:
-  - BmMarketDimensionStorage
-- name: BmProductDimensionResource
-  method: NewProductDimensionResource
+  - BmMarketdimensionStorage
+- name: BmProductdimensionResource
+  method: NewProductdimensionResource
   storages:
-  - BmProductDimensionStorage
+  - BmProductdimensionStorage
 
 models:
-- MarketDimension
-- ProductDimension
+- Marketdimension
+- Productdimension
 
 services:
 - name: bm-marketdimension
-  model: BmMarketDimension
-  resource: BmMarketDimensionResource
+  model: BmMarketdimension
+  resource: BmMarketdimensionResource
 - name: bm-productdimension
-  model: BmProductDimension
-  resource: BmProductDimensionResource
+  model: BmProductdimension
+  resource: BmProductdimensionResource
 
 functions:
-- name: BmMarketScopeHandler
-  create: NewBmMarketScopeHandler
+- name: BmListHandler
+  create: NewListHandler
   daemons:
   - BmMongodbDaemon
-  method: MarketScope
-  http: GET
-  args:
-  - name
-- name: BmProductCountHandler
-  create: NewBmProductCountHandler
-  daemons:
-  - BmMongodbDaemon
-  method: ProductCount
-  http: GET
-  args:
-  - name
-- name: BmMarketRatioHandler
-  create: NewBmMarketRatioHandler
-  daemons:
-  - BmMongodbDaemon
-  method: MarketRatio
-  http: GET
-  args:
-  - name
-- name: BmMaxPortionHandler
-  create: NewBmMaxPortionHandler
-  daemons:
-  - BmMongodbDaemon
-  method: MaxPortion
-  http: GET
-  args:
-  - name
-- name: BmMarketScopeTrendHandler
-  create: NewBmMarketScopeTrendHandler
-  daemons:
-  - BmMongodbDaemon
-  method: MarketScopeTrend
-  http: GET
-  args:
-  - name
-- name: BmProductPortionHandler
-  create: NewBmProductPortionHandler
-  daemons:
-  - BmMongodbDaemon
-  method: ProductPortion
-  http: GET
-  args:
-  - name
-- name: BmVolumeTrendHandler
-  create: NewBmVolumeTrendHandler
-  daemons:
-  - BmMongodbDaemon
-  method: VolumeTrend
-  http: GET
-  args:
-  - name
-- name: BmVolumeCmpHandler
-  create: NewBmVolumeCmpHandler
-  daemons:
-  - BmMongodbDaemon
-  method: VolumeCmp
-  http: GET
-  args:
-  - name
-- name: BmPortionTrendHandler
-  create: NewBmPortionTrendHandler
-  daemons:
-  - BmMongodbDaemon
-  method: PortionTrend
-  http: GET
-  args:
-  - name
-- name: BmPortionCmpHandler
-  create: NewBmPortionCmpHandler
-  daemons:
-  - BmMongodbDaemon
-  method: PortionCmp
-  http: GET
-  args:
-  - name
-- name: BmGetMarketHandler
-  create: NewBmGetMarketHandler
-  daemons:
-  - BmMongodbDaemon
-  method: GetMarket
-  http: GET
+  method: List
+  http: Get
   args:
   - name
 
@@ -138,7 +58,7 @@ daemons:
   args:
     host: 192.168.100.176
     port: 27017
-    database: max_market_aggregation
+    database: pharbers-max-repository
 - name: BmRedisDaemon
   method: NewRedisDBDaemon
   args:
