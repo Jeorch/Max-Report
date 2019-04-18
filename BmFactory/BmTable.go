@@ -15,6 +15,7 @@ type BmTable struct{}
 var BLACKMIRROR_MODEL_FACTORY = map[string]interface{}{
 	"BmProductdimension":                BmModel.Productdimension{},
 	"BmMarketdimension":                 BmModel.Marketdimension{},
+	"BmList":                 			 BmModel.List{},
 }
 
 var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{

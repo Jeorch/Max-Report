@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-
+	"gopkg.in/mgo.v2/bson"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
@@ -26,6 +26,22 @@ func (s BmProductdimensionStorage) GetAll(r api2go.Request, skip int, take int) 
 	in := BmModel.Productdimension{}
 	var out []BmModel.Productdimension
 	err := s.db.FindMulti(r, &in, &out, skip, take)
+	if err == nil {
+		var tmp []*BmModel.Productdimension
+		for i := 0; i < len(out); i++ {
+			ptr := out[i]
+			s.db.ResetIdWithId_(&ptr)
+			tmp = append(tmp, &ptr)
+		}
+		return tmp
+	} else {
+		return nil //make(map[string]*BmModel.Productdimension)
+	}
+}
+func (s BmProductdimensionStorage) GetAllByCond(r bson.M, skip int, take int) []*BmModel.Productdimension {
+	in := BmModel.Productdimension{}
+	var out []BmModel.Productdimension
+	err := s.db.FindMultiByCondition( &in, &out,r ,"",skip, take)
 	if err == nil {
 		var tmp []*BmModel.Productdimension
 		for i := 0; i < len(out); i++ {

@@ -7,6 +7,8 @@ import (
 	"github.com/manyminds/api2go"
 	"net/http"
 	"reflect"
+	"strconv"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type BmProductdimensionResource struct {
@@ -26,8 +28,35 @@ func (c BmProductdimensionResource) NewProductdimensionResource(args []BmDataSto
 
 // FindAll Productdimensions
 func (c BmProductdimensionResource) FindAll(r api2go.Request) (api2go.Responder, error) {
-	result := c.BmProductdimensionStorage.GetAll(r,-1,-1)
-	return &Response{Res: result}, nil
+	var result []BmModel.Productdimension
+	hospitalConfigsID, pciok := r.QueryParams["lt[sales_rank]"]
+	if pciok {
+		modelRootID := hospitalConfigsID[0]
+		ranks,_ := strconv.Atoi(modelRootID)
+		yml,_ := strconv.Atoi(r.QueryParams["gte[ym]"][0])
+		ymn,_ := strconv.Atoi(r.QueryParams["lte[ym]"][0])
+		s := make(map[string]interface{})
+		s["$lte"] = ymn
+		s["$gte"] = yml
+		for i:=1;i<=ranks;i++{
+			cond := bson.M{
+							"COMPANY_ID":r.QueryParams["company_id"][0],"MARKET":r.QueryParams["market"][0],
+							"YM":s,"SALES_RANK":i,
+						}
+			modelRoot:= c.BmProductdimensionStorage.GetAllByCond(cond,-1,-1)
+			for _, model := range modelRoot {
+				result = append(result,*model)
+			}
+			
+		}
+		// model, err := c.BmProductdimensionStorage.GetOne(modelRoot.HospitalID)
+		// if err != nil {
+		// 	return &Response{}, err
+		// }
+		return &Response{Res: result}, nil
+	}
+	results := c.BmProductdimensionStorage.GetAll(r,-1,-1)
+	return &Response{Res: results}, nil
 }
 
 // FindOne choc

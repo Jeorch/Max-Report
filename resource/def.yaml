@@ -21,6 +21,7 @@ resources:
 models:
 - Marketdimension
 - Productdimension
+- List
 
 services:
 - name: bm-marketdimension

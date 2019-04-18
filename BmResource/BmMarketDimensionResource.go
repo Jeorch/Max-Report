@@ -7,6 +7,7 @@ import (
 	"github.com/manyminds/api2go"
 	"net/http"
 	"reflect"
+	"fmt"
 )
 
 type BmMarketdimensionResource struct {
@@ -26,6 +27,18 @@ func (c BmMarketdimensionResource) NewMarketdimensionResource(args []BmDataStora
 
 // FindAll Marketdimensions
 func (c BmMarketdimensionResource) FindAll(r api2go.Request) (api2go.Responder, error) {
+	var results []string
+	var list BmModel.List
+	_, ok := r.QueryParams["infomation"]
+	if ok{
+		result := c.BmMarketdimensionStorage.GetAll(r,-1,-1)
+		for _,info := range result{
+			tmpstr := info.Market+":" + fmt.Sprintf("%d",info.Ym)
+			results = append(results,tmpstr)
+		}
+		list.Results=results
+		return &Response{Res: list}, nil
+	}
 	result := c.BmMarketdimensionStorage.GetAll(r,-1,-1)
 	return &Response{Res: result}, nil
 }
