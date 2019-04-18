@@ -26,7 +26,7 @@ type Productdimension struct {
 	SalesRing                 float64		`json:"salesring" bson:"SALESRING"`	
 	Sales_Ring_Growth    	  float64		`json:"sales-ring-growth" bson:"SALES_RING_GROWTH"`
 	Sales_Ring_Growth_Rank    int32			`json:"sales-ring-growth-rank" bson:"SALES_RING_GROWTH_RANK"`
-	Sales_Year_On_Year      float64			`json:"sales_year_on_year" bson:"SALES_YEAR_ON_YEAR"`
+	Sales_Year_On_Year      float64			`json:"sales-year-on-year" bson:"SALES_YEAR_ON_YEAR"`
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface

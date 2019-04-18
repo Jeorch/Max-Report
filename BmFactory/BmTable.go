@@ -2,7 +2,7 @@ package BmFactory
 
 import (
 	"github.com/PharbersDeveloper/Max-Report/BmDataStorage"
-	"github.com/PharbersDeveloper/Max-Report/BmHandler"
+	//"github.com/PharbersDeveloper/Max-Report/BmHandler"
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
 	"github.com/PharbersDeveloper/Max-Report/BmResource"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
@@ -15,7 +15,6 @@ type BmTable struct{}
 var BLACKMIRROR_MODEL_FACTORY = map[string]interface{}{
 	"BmProductdimension":                BmModel.Productdimension{},
 	"BmMarketdimension":                 BmModel.Marketdimension{},
-	"BmList":                 			 BmModel.List{},
 }
 
 var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
@@ -38,7 +37,7 @@ var BLACKMIRROR_DAEMON_FACTORY = map[string]interface{}{
 }
 
 var BLACKMIRROR_FUNCTION_FACTORY = map[string]interface{}{
-	 "BmListHandler":     	   BmHandler.ListHandler{},
+	 //"BmUserAgentHandler":       	   BmHandler.UserAgentHandler{},
 }
 
 

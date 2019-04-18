@@ -21,7 +21,6 @@ resources:
 models:
 - Marketdimension
 - Productdimension
-- List
 
 services:
 - name: bm-marketdimension
@@ -32,14 +31,14 @@ services:
   resource: BmProductdimensionResource
 
 functions:
-- name: BmListHandler
-  create: NewListHandler
-  daemons:
-  - BmMongodbDaemon
-  method: List
-  http: Get
-  args:
-  - name
+# - name: BmListHandler
+#   create: NewListHandler
+#   daemons:
+#   - BmMongodbDaemon
+#   method: List
+#   http: Get
+#   args:
+#   - name
 
 middlewares:
 - name: BmCheckTokenMiddleware
