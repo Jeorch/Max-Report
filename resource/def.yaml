@@ -31,22 +31,38 @@ services:
   resource: BmProductdimensionResource
 
 functions:
-# - name: BmListHandler
-#   create: NewListHandler
+# - name: BmUserAgentHandler
+#   create: NewUserAgentHandler
 #   daemons:
 #   - BmMongodbDaemon
-#   method: List
-#   http: Get
+#   method: GenerateUserAgent
+#   http: GET
+#   args:
+#   - name
+# - name: BmGenerateAccessTokenHandler
+#   create: NewBmGenerateAccessTokenHandler
+#   daemons:
+#   - BmMongodbDaemon
+#   method: GenerateAccessToken
+#   http: GET
+#   args:
+#   - name
+# - name: BmRefreshAccessTokenHandler
+#   create: NewRefreshAccessTokenHandler
+#   daemons:
+#   - BmMongodbDaemon
+#   method: RefreshAccessToken
+#   http: GET
 #   args:
 #   - name
 
 middlewares:
-- name: BmCheckTokenMiddleware
-  create: NewCheckTokenMiddleware
-  daemons:
-  - BmRedisDaemon
-  args:
-  - 192.168.100.116:9096
+# - name: BmCheckTokenMiddleware
+#   create: NewCheckTokenMiddleware
+#   daemons:
+#   - BmRedisDaemon
+#   args:
+#   - 192.168.100.116:9096
 
 panic:
   name: BmCommonPanicHandle

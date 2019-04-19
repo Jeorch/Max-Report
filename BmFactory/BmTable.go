@@ -2,12 +2,12 @@ package BmFactory
 
 import (
 	"github.com/PharbersDeveloper/Max-Report/BmDataStorage"
-	//"github.com/PharbersDeveloper/Max-Report/BmHandler"
+	"github.com/PharbersDeveloper/Max-Report/BmHandler"
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
 	"github.com/PharbersDeveloper/Max-Report/BmResource"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
-	//"github.com/PharbersDeveloper/Max-Report/BmMiddleware"
+	"github.com/PharbersDeveloper/Max-Report/BmMiddleware"
 )
 
 type BmTable struct{}
@@ -28,7 +28,7 @@ var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
 }
 
 var BLACKMIRROR_MIDDLEWARE_FACTORY = map[string]interface{}{
-	//"BmCheckTokenMiddleware": BmMiddleware.BmCheckTokenMiddleware{},
+	"BmCheckTokenMiddleware": BmMiddleware.BmCheckTokenMiddleware{},
 }
 
 var BLACKMIRROR_DAEMON_FACTORY = map[string]interface{}{
@@ -37,7 +37,9 @@ var BLACKMIRROR_DAEMON_FACTORY = map[string]interface{}{
 }
 
 var BLACKMIRROR_FUNCTION_FACTORY = map[string]interface{}{
-	 //"BmUserAgentHandler":       	   BmHandler.UserAgentHandler{},
+	 "BmUserAgentHandler":       	   BmHandler.UserAgentHandler{},
+	 "BmGenerateAccessTokenHandler":    BmHandler.BmGenerateAccessTokenHandler{},
+	 "BmRefreshAccessTokenHandler":     BmHandler.RefreshAccessTokenHandler{},
 }
 
 
