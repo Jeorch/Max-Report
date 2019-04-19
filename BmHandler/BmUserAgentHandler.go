@@ -58,7 +58,7 @@ func (h UserAgentHandler) GenerateUserAgent(w http.ResponseWriter, r *http.Reque
 	}
 	//version := strings.Split(r.URL.Path, "/")[1]
 
-	resource := fmt.Sprint("192.168.100.116:9096/v0/ThirdParty?", r.URL.RawQuery)
+	resource := fmt.Sprint("192.168.100.174:9096/v0/ThirdParty?", r.URL.RawQuery)
 	mergeURL := strings.Join([]string{scheme, resource}, "")
 
 	// 转发

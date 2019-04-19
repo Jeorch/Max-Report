@@ -59,7 +59,7 @@ func (h RefreshAccessTokenHandler) RefreshAccessToken(w http.ResponseWriter, r *
 		scheme = "https://"
 	}
 	version := "v0"
-	resource := fmt.Sprint("192.168.100.116:9096", "/"+version+"/", "RefreshAccessToken", "?", r.URL.RawQuery)
+	resource := fmt.Sprint("192.168.100.174:9096", "/"+version+"/", "RefreshAccessToken", "?", r.URL.RawQuery)
 	mergeURL := strings.Join([]string{scheme, resource}, "")
 
 	// 转发

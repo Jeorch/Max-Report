@@ -31,30 +31,30 @@ services:
   resource: BmProductdimensionResource
 
 functions:
-# - name: BmUserAgentHandler
-#   create: NewUserAgentHandler
-#   daemons:
-#   - BmMongodbDaemon
-#   method: GenerateUserAgent
-#   http: GET
-#   args:
-#   - name
-# - name: BmGenerateAccessTokenHandler
-#   create: NewBmGenerateAccessTokenHandler
-#   daemons:
-#   - BmMongodbDaemon
-#   method: GenerateAccessToken
-#   http: GET
-#   args:
-#   - name
-# - name: BmRefreshAccessTokenHandler
-#   create: NewRefreshAccessTokenHandler
-#   daemons:
-#   - BmMongodbDaemon
-#   method: RefreshAccessToken
-#   http: GET
-#   args:
-#   - name
+- name: BmUserAgentHandler
+  create: NewUserAgentHandler
+  daemons:
+  - BmMongodbDaemon
+  method: GenerateUserAgent
+  http: GET
+  args:
+  - name
+- name: BmGenerateAccessTokenHandler
+  create: NewBmGenerateAccessTokenHandler
+  daemons:
+  - BmMongodbDaemon
+  method: GenerateAccessToken
+  http: GET
+  args:
+  - name
+- name: BmRefreshAccessTokenHandler
+  create: NewRefreshAccessTokenHandler
+  daemons:
+  - BmMongodbDaemon
+  method: RefreshAccessToken
+  http: GET
+  args:
+  - name
 
 middlewares:
 # - name: BmCheckTokenMiddleware
