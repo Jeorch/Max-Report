@@ -7,6 +7,10 @@ storages:
   method: NewProductdimensionStorage
   daemons:
   - BmMongodbDaemon
+- name: BmProd_etcStorage
+  method: NewProd_etcStorage
+  daemons:
+  - BmMongodbDaemon
 
 resources:
 - name: BmMarketdimensionResource
@@ -17,10 +21,12 @@ resources:
   method: NewProductdimensionResource
   storages:
   - BmProductdimensionStorage
+  - BmProd_etcStorage
 
 models:
 - Marketdimension
 - Productdimension
+- Prod_etc
 
 services:
 - name: bm-marketdimension
@@ -72,7 +78,7 @@ daemons:
 - name: BmMongodbDaemon
   method: NewMongoDBDaemon
   args:
-    host: primary
+    host: 192.168.100.176
     port: 27017
     database: pharbers-max-repository
 - name: BmRedisDaemon

@@ -12,21 +12,17 @@ type Productdimension struct {
 	ID						string        `json:"-"`
 	Id_						bson.ObjectId `json:"-" bson:"_id"`
 
-	Company_ID				  string		`json:"company-id" bson:"COMPANY_ID"`
-	Market					  string		`json:"market" bson:"MARKET"`
-	Ym						  int32	   	 	`json:"ym" bson:"YM"`
-	Sales					  float64		`json:"sales" bson:"SALES"`
-	Units					  float64		`json:"units" bson:"UNITS"`
-	Province_Count 	          float64  	    `json:"province-count" bson:"PROVINCE_COUNT"`
-	City_Count 	              int64  	    `json:"city-count" bson:"CITY_COUNT"`
-	Product_Count			  int64			`json:"product-count" bson:"PRODUCT_COUNT"`
-	Min_Product	  			  string		`json:"min-product" bson:"MIN_PRODUCT"`	
-	Sales_Som                 float64		`json:"sales-som" bson:"SALES_SOM"`	
-	Sales_Rank                int32			`json:"sales-rank" bson:"SALES_RANK"`	
-	SalesRing                 float64		`json:"salesring" bson:"SALESRING"`	
-	Sales_Ring_Growth    	  float64		`json:"sales-ring-growth" bson:"SALES_RING_GROWTH"`
-	Sales_Ring_Growth_Rank    int32			`json:"sales-ring-growth-rank" bson:"SALES_RING_GROWTH_RANK"`
-	Sales_Year_On_Year      float64			`json:"sales-year-on-year" bson:"SALES_YEAR_ON_YEAR"`
+	Product_Id  				string     		`json:"-" bson:"PRODUCT_ID"`
+	Ym						 	int32	   	 	`json:"ym" bson:"YM"`
+	Market					 	string		`json:"market" bson:"MARKET"`
+	Sales					 	float64		`json:"sales" bson:"SALES"`
+	Company_ID				 	string		`json:"company-id" bson:"COMPANY_ID"`
+	Sales_Som                 	float64		`json:"sales-som" bson:"SALES_SOM"`	
+	Sales_Rank               	int32			`json:"sales-rank" bson:"SALES_RANK"`
+	Sales_Ring_Growth_Rank   	int32			`json:"sales-ring-growth-rank" bson:"SALES_RING_GROWTH_RANK"`
+	Sales_Ring_Growth    	 	float64		`json:"sales-ring-growth" bson:"SALES_RING_GROWTH"`
+	Product_Name				string 	    `json:"product-name"`
+
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
@@ -42,6 +38,7 @@ func (a *Productdimension) SetID(id string) error {
 func (a *Productdimension) GetConditionsBsonM(parameters map[string][]string) bson.M {
 	rst := make(map[string]interface{})
 	ymr := make(map[string]interface{})
+	rankr := make(map[string]interface{})
 	for k, v := range parameters {
 		switch k {
 		case "company_id":
@@ -67,8 +64,8 @@ func (a *Productdimension) GetConditionsBsonM(parameters map[string][]string) bs
 			if err != nil {
 				panic(err.Error())
 			}
-			ymr["$lte"] = val
-			rst["SALES_RANK"] = ymr
+			rankr["$lte"] = val
+			rst["SALES_RANK"] = rankr
 		case "lte[sales_som]":
 			val, err := strconv.Atoi(v[0])
 			if err != nil {
@@ -88,8 +85,8 @@ func (a *Productdimension) GetConditionsBsonM(parameters map[string][]string) bs
 			if err != nil {
 				panic(err.Error())
 			}
-			ymr["$gte"] = val
-			rst["SALES_RANK"] = ymr
+			rankr["$gte"] = val
+			rst["SALES_RANK"] = rankr
 		case "lt[ym]":
 			val, err := strconv.Atoi(v[0])
 			if err != nil {

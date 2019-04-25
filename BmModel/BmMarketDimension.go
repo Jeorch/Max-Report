@@ -12,23 +12,19 @@ type Marketdimension struct {
 	ID						  string        `json:"-"`
 	Id_						  bson.ObjectId `json:"-" bson:"_id"`
 
-	Company_ID				  string		`json:"company-id" bson:"COMPANY_ID"`
 	Market					  string		`json:"market" bson:"MARKET"`
 	Ym						  int32	   	 	`json:"ym" bson:"YM"`
-	Sales					  float64		`json:"sales" bson:"SALES"`
-	Units					  float64		`json:"units" bson:"UNITS"`
 	Product_Count			  int64			`json:"product-count" bson:"PRODUCT_COUNT"`
-	Product_Countring		  int64			`json:"product-countring" bson:"PRODUCT_COUNTRING"`		
-	Sales_SomRing             float64		`json:"sales-somring" bson:"SALES_SOMRING"`	
+	Sales					  float64		`json:"sales" bson:"SALES"`
 	Sales_Som                 float64		`json:"sales-som" bson:"SALES_SOM"`	
-	Product_Count_Ring_Growth float64		`json:"product-count-ring-growth" bson:"PRODUCT_COUNT_RING_GROWTH"`	
-	Product_CountYear_On_Year int64			`json:"product-countYear-on-year" bson:"PRODUCT_COUNTYEAR_ON_YEAR"`	
-	Product_Count_Year_Growth float64		`json:"product-count-year-growth" bson:"PRODUCT_COUNT_YEAR_GROWTH"`
-	Sales_SomYear_On_Year     float64		`json:"sales-somyear-on-year" bson:"SALES_SOMYEAR_ON_YEAR"`
-	Sales_Som_Year_Growth     float64		`json:"sales-som-year-growth" bson:"SALES_SOM_YEAR_GROWTH"`
-	Sales_Som_Ring_Growth     float64		`json:"sales-som-ring-growth" bson:"SALES_SOM_RING_GROWTH"`
-	Province_Count 	          int64  	    `json:"province-count" bson:"PROVINCE_COUNT"`
-	City_Count 	              int64  	    `json:"city-count" bson:"CITY_COUNT"`
+	Company_ID				  string		`json:"company-id" bson:"COMPANY_ID"`
+	Product_Count_Ring_Growth		  float64			`json:"product-count-ring-growth" bson:"PRODUCT_COUNT_RING_GROWTH"`	
+	Product_Count_Year_Growth		  float64			`json:"product-count-year-growth" bson:"PRODUCT_COUNT_YEAR_GROWTH"`	
+	Concentrated_Sales             float64		`json:"concentrated-sales" bson:"CONCENTRATED_SALES"`	
+	Concentrated_Som 			float64		`json:"concentrated-som" bson:"CONCENTRATED_SOM"`	
+	Concentrated_Ring_Growth float64			`json:"concentrated-ring-growth" bson:"CONCENTRATED_RING_GROWTH"`	
+	Concentrated_Year_Growth float64		`json:"concentrated-year-growth" bson:"CONCENTRATED_YEAR_GROWTH"`
+
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
