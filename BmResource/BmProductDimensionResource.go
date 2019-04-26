@@ -41,7 +41,7 @@ func (c BmProductdimensionResource) FindAll(r api2go.Request) (api2go.Responder,
 	_, lteym := r.QueryParams["lte[ym]"]
 
 	if rankok && gteym && lteym{
-		results = c.BmProductdimensionStorage.GetAll(r,0,10)
+		results = c.BmProductdimensionStorage.GetAll(r,-1,-1)
 		// for _,Product:=range results{
 		// 	if Product.Product_Id!=""{
 		// 		ProductIds=append(ProductIds,Product.Product_Id)
