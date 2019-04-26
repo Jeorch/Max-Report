@@ -78,8 +78,8 @@ daemons:
 - name: BmMongodbDaemon
   method: NewMongoDBDaemon
   args:
-    host: 192.168.100.176
-    port: 27017
+    host: 123.56.179.133
+    port: 5555
     database: pharbers-max-repository
 - name: BmRedisDaemon
   method: NewRedisDBDaemon

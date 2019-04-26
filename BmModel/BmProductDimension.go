@@ -12,7 +12,7 @@ type Productdimension struct {
 	ID						string        `json:"-"`
 	Id_						bson.ObjectId `json:"-" bson:"_id"`
 
-	Product_Id  				string     		`json:"-" bson:"PRODUCT_ID"`
+	Product_Id  				string     		`json:"product-id" bson:"PRODUCT_ID"`
 	Ym						 	int32	   	 	`json:"ym" bson:"YM"`
 	Market					 	string		`json:"market" bson:"MARKET"`
 	Sales					 	float64		`json:"sales" bson:"SALES"`
@@ -21,8 +21,9 @@ type Productdimension struct {
 	Sales_Rank               	int32			`json:"sales-rank" bson:"SALES_RANK"`
 	Sales_Ring_Growth_Rank   	int32			`json:"sales-ring-growth-rank" bson:"SALES_RING_GROWTH_RANK"`
 	Sales_Ring_Growth    	 	float64		`json:"sales-ring-growth" bson:"SALES_RING_GROWTH"`
-	Product_Name				string 	    `json:"product-name"`
-
+	Sales_Year_Growth    	 	float64		`json:"sales-year-growth" bson:"SALES_YEAR_GROWTH"`
+	Product_Name				string 	    `json:"product-name" bson:"MIN_PRODUCT"`
+	
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface

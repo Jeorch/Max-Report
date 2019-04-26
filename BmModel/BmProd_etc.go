@@ -12,6 +12,7 @@ type Prod_etc struct {
 	ID						  string        `json:"-"`
 	Id_						  bson.ObjectId `json:"-" bson:"_id"`
 	Product_ID					string		`json:"-" bson:"PRODUCT_ID"`
+	Product_Company				  	  string		`json:"-" bson:"PH_CORP_NAME"`
 	Product_Name				  	  string		`json:"-" bson:"PH_PRODUCT_NAME"`
 }
 

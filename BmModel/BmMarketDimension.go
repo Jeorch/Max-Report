@@ -25,6 +25,10 @@ type Marketdimension struct {
 	Concentrated_Ring_Growth float64			`json:"concentrated-ring-growth" bson:"CONCENTRATED_RING_GROWTH"`	
 	Concentrated_Year_Growth float64		`json:"concentrated-year-growth" bson:"CONCENTRATED_YEAR_GROWTH"`
 
+	Sales_Som_Ring_Growth float64		`json:"sales-som-ring-growth" bson:"SALES_SOM_RING_GROWTH"`
+	Sales_Som_Year_Growth float64		`json:"sales-som-year-growth" bson:"SALES_SOM_YEAR_GROWTH"`
+	 
+
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
