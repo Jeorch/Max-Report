@@ -11,6 +11,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/manyminds/api2go"
 	//"os"
+	"os"
 )
 
 func main() {
@@ -22,7 +23,8 @@ func main() {
 	pod.RegisterSerFromYAML("resource/def.yaml")
 
 	var bmRouter BmConfig.BmRouterConfig
-	bmRouter.GenerateConfig("BM_HOME")
+	os.Setenv("MAXVIEW_HOME", ".")
+	bmRouter.GenerateConfig("MAXVIEW_HOME")
 	addr := bmRouter.Host + ":" + bmRouter.Port
 	fmt.Println("Listening on ", addr)
 	api := api2go.NewAPIWithResolver(version, &BmApiResolver.RequestURL{Addr: addr})

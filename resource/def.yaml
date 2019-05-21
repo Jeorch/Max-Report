@@ -1,3 +1,13 @@
+models:
+- Marketdimension
+- Productdimension
+- Prod_etc
+- Market
+- City
+- OverallInfo
+- SampleCover
+- SalesData
+
 storages:
 - name: BmMarketdimensionStorage
   method: NewMarketdimensionStorage
@@ -11,6 +21,26 @@ storages:
   method: NewProd_etcStorage
   daemons:
   - BmMongodbDaemon
+- name: BmMarketStorage
+  method: NewMarketStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmCityStorage
+  method: NewCityStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmOverallInfoStorage
+  method: NewOverallInfoStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmSampleCoverStorage
+  method: NewSampleCoverStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmSalesDataStorage
+  method: NewSalesDataStorage
+  daemons:
+  - BmMongodbDaemon
 
 resources:
 - name: BmMarketdimensionResource
@@ -22,11 +52,23 @@ resources:
   storages:
   - BmProductdimensionStorage
   - BmProd_etcStorage
-
-models:
-- Marketdimension
-- Productdimension
-- Prod_etc
+- name: BmMarketResource
+  method: NewMarketResource
+  storages:
+  - BmMarketStorage
+- name: BmOverallInfoResource
+  method: NewOverallInfoResource
+  storages:
+  - BmOverallInfoStorage
+- name: BmSampleCoverResource
+  method: NewSampleCoverResource
+  storages:
+  - BmCityStorage
+  - BmSampleCoverStorage
+- name: BmSalesDataResource
+  method: NewSalesDataResource
+  storages:
+  - BmSalesDataStorage
 
 services:
 - name: bm-marketdimension
@@ -35,6 +77,18 @@ services:
 - name: bm-productdimension
   model: BmProductdimension
   resource: BmProductdimensionResource
+- name: bm-market
+  model: BmMarket
+  resource: BmMarketResource
+- name: bm-overallInfo
+  model: BmOverallInfo
+  resource: BmOverallInfoResource
+- name: bm-sampleCover
+  model: BmSampleCover
+  resource: BmSampleCoverResource
+- name: bm-salesData
+  model: BmSalesData
+  resource: BmSalesDataResource
 
 functions:
 # - name: BmUserAgentHandler
@@ -78,8 +132,10 @@ daemons:
 - name: BmMongodbDaemon
   method: NewMongoDBDaemon
   args:
-    host: primary
-    port: 27017
+    host: 123.56.179.133
+    port: 5555
+#    host: primary
+#    port: 27017
     database: pharbers-max-repository
 - name: BmRedisDaemon
   method: NewRedisDBDaemon
