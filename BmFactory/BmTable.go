@@ -31,11 +31,10 @@ var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
 	"BmProductaggdataResource":   BmResource.BmProductaggdataResource{},
 	"BmMarketaggdataResource":    BmResource.BmMarketaggdataResource{},
 	"BmMarketResource":           BmResource.BmMarketResource{},
-	"BmCityStorage":             BmDataStorage.BmCityStorage{},
-	"BmProductStorage":          BmDataStorage.BmProductStorage{},
-	"BmOverallInfoStorage":      BmDataStorage.BmOverallInfoStorage{},
-	"BmSampleCoverStorage":      BmDataStorage.BmSampleCoverStorage{},
-	"BmSalesRecordStorage":      BmDataStorage.BmSalesRecordStorage{},
+	"BmOverallInfoResource":      BmResource.BmOverallInfoResource{},
+	"BmSampleCoverResource":      BmResource.BmSampleCoverResource{},
+	"BmSalesRecordResource":      BmResource.BmSalesRecordResource{},
+
 }
 
 var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
@@ -44,9 +43,11 @@ var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
 	"BmProductaggdataStorage":   BmDataStorage.BmProductaggdataStorage{},
 	"BmMarketaggdataStorage":    BmDataStorage.BmMarketaggdataStorage{},
 	"BmMarketStorage":           BmDataStorage.BmMarketStorage{},
-	"BmOverallInfoResource":      BmResource.BmOverallInfoResource{},
-	"BmSampleCoverResource":      BmResource.BmSampleCoverResource{},
-	"BmSalesRecordResource":      BmResource.BmSalesRecordResource{},
+	"BmCityStorage":             BmDataStorage.BmCityStorage{},
+	"BmProductStorage":          BmDataStorage.BmProductStorage{},
+	"BmOverallInfoStorage":      BmDataStorage.BmOverallInfoStorage{},
+	"BmSampleCoverStorage":      BmDataStorage.BmSampleCoverStorage{},
+	"BmSalesRecordStorage":      BmDataStorage.BmSalesRecordStorage{},
 }
 
 var BLACKMIRROR_MIDDLEWARE_FACTORY = map[string]interface{}{
