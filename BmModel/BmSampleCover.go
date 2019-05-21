@@ -45,7 +45,7 @@ func (a *SampleCover) GetConditionsBsonM(parameters map[string][]string) bson.M 
 func (a SampleCover) GetReferences() []jsonapi.Reference {
 	return []jsonapi.Reference{
 		{
-			Type: "cities", //s
+			Type: "cities",
 			Name: "city",
 		},
 	}

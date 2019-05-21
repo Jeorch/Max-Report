@@ -10,26 +10,49 @@ import (
 )
 
 type BmSalesDataResource struct {
+	BmCityStorage      *BmDataStorage.BmCityStorage
+	BmProductStorage   *BmDataStorage.BmProductStorage
 	BmSalesDataStorage *BmDataStorage.BmSalesDataStorage
 }
 
 func (c BmSalesDataResource) NewSalesDataResource(args []BmDataStorage.BmStorage) BmSalesDataResource {
-	var cs *BmDataStorage.BmSalesDataStorage
+	var cs *BmDataStorage.BmCityStorage
+	var ps *BmDataStorage.BmProductStorage
+	var sds *BmDataStorage.BmSalesDataStorage
 	for _, arg := range args {
 		tp := reflect.ValueOf(arg).Elem().Type()
-		if tp.Name() == "BmSalesDataStorage" {
-			cs = arg.(*BmDataStorage.BmSalesDataStorage)
+		if tp.Name() == "BmCityStorage" {
+			cs = arg.(*BmDataStorage.BmCityStorage)
+		} else if tp.Name() == "BmProductStorage" {
+			ps = arg.(*BmDataStorage.BmProductStorage)
+		} else if tp.Name() == "BmSalesDataStorage" {
+			sds = arg.(*BmDataStorage.BmSalesDataStorage)
 		}
 	}
-	return BmSalesDataResource{BmSalesDataStorage: cs}
+	return BmSalesDataResource{
+		BmCityStorage:      cs,
+		BmProductStorage:   ps,
+		BmSalesDataStorage: sds,
+	}
 }
 
 // FindAll SalesDatas
 func (c BmSalesDataResource) FindAll(r api2go.Request) (api2go.Responder, error) {
 	var result []*BmModel.SalesData
-	_, ok := r.QueryParams["company-id"]
+	_, ok := r.QueryParams["info-id"]
 	if ok {
 		result = c.BmSalesDataStorage.GetAll(r, -1, -1)
+		for _, sc := range result {
+			if sc.AddressType == 1 {
+				city, _ := c.BmCityStorage.GetOne(sc.AddressId)
+				sc.City = &city
+			}
+
+			if sc.GoodsType == 1 {
+				product, _ := c.BmProductStorage.GetOne(sc.GoodsId)
+				sc.Product = &product
+			}
+		}
 		return &Response{Res: result}, nil
 	}
 	return &Response{Res: result}, nil

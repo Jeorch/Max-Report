@@ -2,14 +2,18 @@ package BmModel
 
 import (
 	"gopkg.in/mgo.v2/bson"
-	)
+)
 
 type Product struct {
-	ID        string        `json:"-"`
-	Id_       bson.ObjectId `json:"-" bson:"_id"`
-	CompanyId string        `json:"company-id" bson:"COMPANY_ID"`
-	Product    string        `json:"market" bson:"MARKET"`
-	Desc      string        `json:"desc" bson:"DESC"`
+	ID            string        `json:"-"`
+	Id_           bson.ObjectId `json:"-" bson:"_id"`
+	Title         string        `json:"title" bson:"TITLE"`
+	CorpName      string        `json:"corp-name" bson:"CORP_NAME"`
+	DeliveryWay   string        `json:"delivery-way" bson:"DELIVERY_WAY"`
+	DosageName    string        `json:"dosage-name" bson:"DOSAGE_NAME"`
+	MoleName      string        `json:"mole-name" bson:"MOLE_NAME"`
+	PackageDes    string        `json:"package-des" bson:"PACKAGE_DES"`
+	PackageNumber int32         `json:"package-number" bson:"PACKAGE_NUMBER"`
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
@@ -27,10 +31,8 @@ func (a *Product) GetConditionsBsonM(parameters map[string][]string) bson.M {
 	rst := make(map[string]interface{})
 	for k, v := range parameters {
 		switch k {
-		case "company-id":
-			rst["COMPANY_ID"] = v[0]
-		case "market":
-			rst["MARKET"] = v[0]
+		case "title":
+			rst["TITLE"] = v[0]
 		}
 	}
 	return rst

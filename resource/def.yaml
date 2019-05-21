@@ -4,6 +4,7 @@ models:
 - Prod_etc
 - Market
 - City
+- Product
 - OverallInfo
 - SampleCover
 - SalesData
@@ -27,6 +28,10 @@ storages:
   - BmMongodbDaemon
 - name: BmCityStorage
   method: NewCityStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmProductStorage
+  method: NewProductStorage
   daemons:
   - BmMongodbDaemon
 - name: BmOverallInfoStorage
@@ -68,6 +73,8 @@ resources:
 - name: BmSalesDataResource
   method: NewSalesDataResource
   storages:
+  - BmCityStorage
+  - BmProductStorage
   - BmSalesDataStorage
 
 services:
