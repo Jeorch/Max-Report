@@ -1,3 +1,15 @@
+models:
+- Marketdimension
+- Productdimension
+- Marketaggregation
+- Productaggregation
+- Market
+- City
+- Product
+- OverallInfo
+- SampleCover
+- SalesRecord
+
 storages:
 - name: BmMarketdimensionStorage
   method: NewMarketdimensionStorage
@@ -7,16 +19,36 @@ storages:
   method: NewProductdimensionStorage
   daemons:
   - BmMongodbDaemon
-- name: BmMarketStorage
-  method: NewMarketStorage
-  daemons:
-  - BmMongodbDaemon
 - name: BmProductaggdataStorage
   method: NewStorage
   daemons:
   - BmMongodbDaemon
 - name: BmMarketaggdataStorage
   method: NewStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmMarketStorage
+  method: NewMarketStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmCityStorage
+  method: NewStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmProductStorage
+  method: NewProductStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmOverallInfoStorage
+  method: NewOverallInfoStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmSampleCoverStorage
+  method: NewSampleCoverStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmSalesRecordStorage
+  method: NewSalesRecordStorage
   daemons:
   - BmMongodbDaemon
 
@@ -29,10 +61,6 @@ resources:
   method: NewProductdimensionResource
   storages:
   - BmProductdimensionStorage
-- name: BmMarketResource
-  method: NewMarketResource
-  storages:
-  - BmMarketStorage
 - name: BmProductaggdataResource
   method: NewResource
   storages:
@@ -41,13 +69,25 @@ resources:
   method: NewResource
   storages:
   - BmMarketaggdataStorage
-
-models:
-- Marketdimension
-- Productdimension
-- Marketaggregation
-- Productaggregation
-- Market
+- name: BmMarketResource
+  method: NewMarketResource
+  storages:
+  - BmMarketStorage
+- name: BmOverallInfoResource
+  method: NewOverallInfoResource
+  storages:
+  - BmOverallInfoStorage
+- name: BmSampleCoverResource
+  method: NewSampleCoverResource
+  storages:
+  - BmCityStorage
+  - BmSampleCoverStorage
+- name: BmSalesRecordResource
+  method: NewSalesRecordResource
+  storages:
+  - BmCityStorage
+  - BmProductStorage
+  - BmSalesRecordStorage
 
 services:
 - name: bm-marketdimension
@@ -56,15 +96,24 @@ services:
 - name: bm-productdimension
   model: BmProductdimension
   resource: BmProductdimensionResource
-- name: bm-market
-  model: BmMarket
-  resource: BmMarketResource
 - name: bm-marketaggregation
   model: BmMarketaggregation
   resource: BmMarketaggdataResource
 - name: bm-productaggregation
   model: BmProductaggregation
   resource: BmProductaggdataResource
+- name: bm-market
+  model: BmMarket
+  resource: BmMarketResource
+- name: bm-overallInfo
+  model: BmOverallInfo
+  resource: BmOverallInfoResource
+- name: bm-sampleCover
+  model: BmSampleCover
+  resource: BmSampleCoverResource
+- name: bm-salesRecord
+  model: BmSalesRecord
+  resource: BmSalesRecordResource
 
 functions:
 # - name: BmUserAgentHandler

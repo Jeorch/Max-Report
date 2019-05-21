@@ -19,14 +19,19 @@ func (c BmMarketResource) NewMarketResource(args []BmDataStorage.BmStorage) BmMa
 		tp := reflect.ValueOf(arg).Elem().Type()
 		if tp.Name() == "BmMarketStorage" {
 			cs = arg.(*BmDataStorage.BmMarketStorage)
-		}	
+		}
 	}
 	return BmMarketResource{BmMarketStorage: cs}
 }
 
 // FindAll Markets
 func (c BmMarketResource) FindAll(r api2go.Request) (api2go.Responder, error) {
-	result := c.BmMarketStorage.GetAll(r,-1,-1)
+	var result []*BmModel.Market
+	_, ok := r.QueryParams["company-id"]
+	if ok {
+		result = c.BmMarketStorage.GetAll(r, -1, -1)
+		return &Response{Res: result}, nil
+	}
 	return &Response{Res: result}, nil
 }
 
