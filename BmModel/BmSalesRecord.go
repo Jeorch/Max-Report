@@ -24,7 +24,8 @@ type SalesRecord struct {
 	GoodsType int32  `json:"goods-type" bson:"GOODS_TYPE"`
 	GoodsId   string `json:"goods-id" bson:"GOODS_ID"`
 
-	// 1 => Salse ; 2 => growth ; 3 => Share ;
+	// 1 => Salse ; 2 => Growth ; 3 => Mkt_Share ; 4 => Mkt_Share_Growth ; 5 => Mkt_EI ;
+	// 							6 => Mole_Share ; 7 => Mole_Share_Growth ; 8 => Mole_EI ;
 	ValueType int32   `json:"value-type" bson:"VALUE_TYPE"`
 	Value     float64 `json:"value" bson:"VALUE"`
 
@@ -61,6 +62,8 @@ func (a *SalesRecord) GetConditionsBsonM(parameters map[string][]string) bson.M 
 			rst["GOODS_TYPE"], _ = strconv.Atoi(v[0])
 		case "goods-id":
 			rst["GOODS_ID"] = v[0]
+		case "value-type":
+			rst["VALUE_TYPE"], _ = strconv.Atoi(v[0])
 		}
 	}
 	return rst
