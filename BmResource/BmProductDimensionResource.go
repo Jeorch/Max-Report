@@ -11,38 +11,33 @@ import (
 
 type BmProductdimensionResource struct {
 	BmProductdimensionStorage *BmDataStorage.BmProductdimensionStorage
-	BmProd_etcStorage *BmDataStorage.BmProd_etcStorage
 }
 
 func (c BmProductdimensionResource) NewProductdimensionResource(args []BmDataStorage.BmStorage) BmProductdimensionResource {
 	var cs *BmDataStorage.BmProductdimensionStorage
-	var ps *BmDataStorage.BmProd_etcStorage
 	for _, arg := range args {
 		tp := reflect.ValueOf(arg).Elem().Type()
 		if tp.Name() == "BmProductdimensionStorage" {
 			cs = arg.(*BmDataStorage.BmProductdimensionStorage)
-		}else if tp.Name() == "BmProd_etcStorage" {
-			ps = arg.(*BmDataStorage.BmProd_etcStorage)
 		}
 	}
-	return BmProductdimensionResource{BmProductdimensionStorage: cs,BmProd_etcStorage:ps}
+	return BmProductdimensionResource{BmProductdimensionStorage: cs}
 }
 
 // FindAll Productdimensions
 func (c BmProductdimensionResource) FindAll(r api2go.Request) (api2go.Responder, error) {
 	var rss api2go.Request
 	rss.QueryParams = make(map[string][]string, 0)
-	var results []*BmModel.Productdimension
 	_, rankok := r.QueryParams["lte[sales_rank]"]
 	_, gteym := r.QueryParams["gte[ym]"]
 	_, lteym := r.QueryParams["lte[ym]"]
 
 	if rankok && gteym && lteym{
-		results = c.BmProductdimensionStorage.GetAll(r,-1,-1)
+		results := c.BmProductdimensionStorage.GetAll(r,-1,-1)
 		return &Response{Res: results}, nil
 	}
 	
-	results = c.BmProductdimensionStorage.GetAll(r,-1,-1)
+	results := c.BmProductdimensionStorage.GetAll(r,-1,-1)
 	return &Response{Res: results}, nil
 }
 

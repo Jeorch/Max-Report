@@ -36,7 +36,7 @@ func (a *Productdimension) SetID(id string) error {
 	return nil
 }
 func (a *Productdimension) GetConditionsBsonM(parameters map[string][]string) bson.M {
-	rst := make(map[string]interface{})
+	rst := make(map[string]interface{},0)
 	ymr := make(map[string]interface{})
 	rankr := make(map[string]interface{})
 	for k, v := range parameters {

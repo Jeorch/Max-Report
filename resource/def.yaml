@@ -7,10 +7,6 @@ storages:
   method: NewProductdimensionStorage
   daemons:
   - BmMongodbDaemon
-- name: BmProd_etcStorage
-  method: NewProd_etcStorage
-  daemons:
-  - BmMongodbDaemon
 - name: BmMarketStorage
   method: NewMarketStorage
   daemons:
@@ -25,7 +21,6 @@ resources:
   method: NewProductdimensionResource
   storages:
   - BmProductdimensionStorage
-  - BmProd_etcStorage
 - name: BmMarketResource
   method: NewMarketResource
   storages:
@@ -34,7 +29,6 @@ resources:
 models:
 - Marketdimension
 - Productdimension
-- Prod_etc
 - Market
 
 services:

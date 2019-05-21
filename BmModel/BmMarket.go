@@ -28,7 +28,7 @@ func (u *Market) GetConditionsBsonM(parameters map[string][]string) bson.M {
 	rst := make(map[string]interface{})
 	for k, v := range parameters {
 		switch k {
-		case "COMPANY_ID":
+		case "company_id":
 			k = strings.ToUpper(k)
 			rst[k] = v[0]
 		}
