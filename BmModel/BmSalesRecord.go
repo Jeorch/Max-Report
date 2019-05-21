@@ -12,7 +12,7 @@ type SalesRecord struct {
 	Id_    bson.ObjectId `json:"-" bson:"_id"`
 	InfoId string        `json:"info-id" bson:"INFO_ID"`
 
-	// 1 => Month ; 2 => Quarter ; 3 => Year ; 4 => YTD ; 5 => MAT
+	// 1 => Month ; 2 => Quarter ; 3 => Year ; 4 => YTD ; 5 => MAT ;
 	DateType int32  `json:"date-type" bson:"DATE_TYPE"`
 	Date     string `json:"date" bson:"DATE"`
 
@@ -20,7 +20,7 @@ type SalesRecord struct {
 	AddressType int32  `json:"address-type" bson:"ADDRESS_TYPE"`
 	AddressId   string `json:"address-id" bson:"ADDRESS_ID"`
 
-	// 0 => Total ; 1 => Product ;
+	// 0 => Total ; 1 => Product ; 2 => Mole ; 3 => Market ;
 	GoodsType int32  `json:"goods-type" bson:"GOODS_TYPE"`
 	GoodsId   string `json:"goods-id" bson:"GOODS_ID"`
 
