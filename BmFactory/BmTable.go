@@ -15,18 +15,24 @@ type BmTable struct{}
 var BLACKMIRROR_MODEL_FACTORY = map[string]interface{}{
 	"BmProductdimension": BmModel.Productdimension{},
 	"BmMarketdimension":  BmModel.Marketdimension{},
+	"BmProductaggregation":   BmModel.Productaggregation{},
+	"BmMarketaggregation":    BmModel.Marketaggregation{},
 	"BmMarket":           BmModel.Market{},
 }
 
 var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
 	"BmProductdimensionResource": BmResource.BmProductdimensionResource{},
 	"BmMarketdimensionResource":  BmResource.BmMarketdimensionResource{},
+	"BmProductaggdataResource":   BmResource.BmProductaggdataResource{},
+	"BmMarketaggdataResource":    BmResource.BmMarketaggdataResource{},
 	"BmMarketResource":           BmResource.BmMarketResource{},
 }
 
 var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
 	"BmProductdimensionStorage": BmDataStorage.BmProductdimensionStorage{},
 	"BmMarketdimensionStorage":  BmDataStorage.BmMarketdimensionStorage{},
+	"BmProductaggdataStorage":   BmDataStorage.BmProductaggdataStorage{},
+	"BmMarketaggdataStorage":    BmDataStorage.BmMarketaggdataStorage{},
 	"BmMarketStorage":           BmDataStorage.BmMarketStorage{},
 }
 

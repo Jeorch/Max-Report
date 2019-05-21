@@ -11,6 +11,14 @@ storages:
   method: NewMarketStorage
   daemons:
   - BmMongodbDaemon
+- name: BmProductaggdataStorage
+  method: NewStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmMarketaggdataStorage
+  method: NewStorage
+  daemons:
+  - BmMongodbDaemon
 
 resources:
 - name: BmMarketdimensionResource
@@ -25,10 +33,20 @@ resources:
   method: NewMarketResource
   storages:
   - BmMarketStorage
+- name: BmProductaggdataResource
+  method: NewResource
+  storages:
+  - BmProductaggdataStorage
+- name: BmMarketaggdataResource
+  method: NewResource
+  storages:
+  - BmMarketaggdataStorage
 
 models:
 - Marketdimension
 - Productdimension
+- Marketaggregation
+- Productaggregation
 - Market
 
 services:
@@ -41,6 +59,12 @@ services:
 - name: bm-market
   model: BmMarket
   resource: BmMarketResource
+- name: bm-marketaggregation
+  model: BmMarketaggregation
+  resource: BmMarketaggdataResource
+- name: bm-productaggregation
+  model: BmProductaggregation
+  resource: BmProductaggdataResource
 
 functions:
 # - name: BmUserAgentHandler
