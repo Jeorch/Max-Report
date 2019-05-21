@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-type SalesData struct {
+type SalesRecord struct {
 	ID     string        `json:"-"`
 	Id_    bson.ObjectId `json:"-" bson:"_id"`
 	InfoId string        `json:"info-id" bson:"INFO_ID"`
@@ -33,17 +33,17 @@ type SalesData struct {
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
-func (a SalesData) GetID() string {
+func (a SalesRecord) GetID() string {
 	return a.ID
 }
 
 // SetID to satisfy jsonapi.UnmarshalIdentifier interface
-func (a *SalesData) SetID(id string) error {
+func (a *SalesRecord) SetID(id string) error {
 	a.ID = id
 	return nil
 }
 
-func (a *SalesData) GetConditionsBsonM(parameters map[string][]string) bson.M {
+func (a *SalesRecord) GetConditionsBsonM(parameters map[string][]string) bson.M {
 	rst := make(map[string]interface{})
 	for k, v := range parameters {
 		switch k {
@@ -67,7 +67,7 @@ func (a *SalesData) GetConditionsBsonM(parameters map[string][]string) bson.M {
 }
 
 // GetReferences to satisfy the jsonapi.MarshalReferences interface
-func (a SalesData) GetReferences() []jsonapi.Reference {
+func (a SalesRecord) GetReferences() []jsonapi.Reference {
 	return []jsonapi.Reference{
 		{
 			Type: "cities",
@@ -81,7 +81,7 @@ func (a SalesData) GetReferences() []jsonapi.Reference {
 }
 
 // GetReferencedIDs to satisfy the jsonapi.MarshalLinkedRelations interface
-func (a SalesData) GetReferencedIDs() []jsonapi.ReferenceID {
+func (a SalesRecord) GetReferencedIDs() []jsonapi.ReferenceID {
 	var result []jsonapi.ReferenceID
 
 	if a.AddressType == 1 {
@@ -104,7 +104,7 @@ func (a SalesData) GetReferencedIDs() []jsonapi.ReferenceID {
 }
 
 // GetReferencedStructs to satisfy the jsonapi.MarhsalIncludedRelations interface
-func (a SalesData) GetReferencedStructs() []jsonapi.MarshalIdentifier {
+func (a SalesRecord) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 	var result []jsonapi.MarshalIdentifier
 
 	if a.AddressType == 1 && a.City != nil {
@@ -118,7 +118,7 @@ func (a SalesData) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 	return result
 }
 
-func (a *SalesData) SetToOneReferenceID(name, ID string) error {
+func (a *SalesRecord) SetToOneReferenceID(name, ID string) error {
 	if name == "city" {
 		a.AddressId = ID
 		return nil

@@ -7,7 +7,7 @@ models:
 - Product
 - OverallInfo
 - SampleCover
-- SalesData
+- SalesRecord
 
 storages:
 - name: BmMarketdimensionStorage
@@ -42,8 +42,8 @@ storages:
   method: NewSampleCoverStorage
   daemons:
   - BmMongodbDaemon
-- name: BmSalesDataStorage
-  method: NewSalesDataStorage
+- name: BmSalesRecordStorage
+  method: NewSalesRecordStorage
   daemons:
   - BmMongodbDaemon
 
@@ -70,12 +70,12 @@ resources:
   storages:
   - BmCityStorage
   - BmSampleCoverStorage
-- name: BmSalesDataResource
-  method: NewSalesDataResource
+- name: BmSalesRecordResource
+  method: NewSalesRecordResource
   storages:
   - BmCityStorage
   - BmProductStorage
-  - BmSalesDataStorage
+  - BmSalesRecordStorage
 
 services:
 - name: bm-marketdimension
@@ -93,9 +93,9 @@ services:
 - name: bm-sampleCover
   model: BmSampleCover
   resource: BmSampleCoverResource
-- name: bm-salesData
-  model: BmSalesData
-  resource: BmSalesDataResource
+- name: bm-salesRecord
+  model: BmSalesRecord
+  resource: BmSalesRecordResource
 
 functions:
 # - name: BmUserAgentHandler

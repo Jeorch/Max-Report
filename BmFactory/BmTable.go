@@ -21,7 +21,7 @@ var BLACKMIRROR_MODEL_FACTORY = map[string]interface{}{
 	"BmProduct":          BmModel.Product{},
 	"BmOverallInfo":      BmModel.OverallInfo{},
 	"BmSampleCover":      BmModel.SampleCover{},
-	"BmSalesData":        BmModel.SalesData{},
+	"BmSalesRecord":      BmModel.SalesRecord{},
 }
 
 var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
@@ -33,7 +33,7 @@ var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
 	"BmProductStorage":          BmDataStorage.BmProductStorage{},
 	"BmOverallInfoStorage":      BmDataStorage.BmOverallInfoStorage{},
 	"BmSampleCoverStorage":      BmDataStorage.BmSampleCoverStorage{},
-	"BmSalesDataStorage":        BmDataStorage.BmSalesDataStorage{},
+	"BmSalesRecordStorage":      BmDataStorage.BmSalesRecordStorage{},
 }
 
 var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
@@ -42,7 +42,7 @@ var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
 	"BmMarketResource":           BmResource.BmMarketResource{},
 	"BmOverallInfoResource":      BmResource.BmOverallInfoResource{},
 	"BmSampleCoverResource":      BmResource.BmSampleCoverResource{},
-	"BmSalesDataResource":        BmResource.BmSalesDataResource{},
+	"BmSalesRecordResource":      BmResource.BmSalesRecordResource{},
 }
 
 var BLACKMIRROR_MIDDLEWARE_FACTORY = map[string]interface{}{

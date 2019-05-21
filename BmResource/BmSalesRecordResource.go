@@ -9,39 +9,39 @@ import (
 	"reflect"
 )
 
-type BmSalesDataResource struct {
-	BmCityStorage      *BmDataStorage.BmCityStorage
-	BmProductStorage   *BmDataStorage.BmProductStorage
-	BmSalesDataStorage *BmDataStorage.BmSalesDataStorage
+type BmSalesRecordResource struct {
+	BmCityStorage        *BmDataStorage.BmCityStorage
+	BmProductStorage     *BmDataStorage.BmProductStorage
+	BmSalesRecordStorage *BmDataStorage.BmSalesRecordStorage
 }
 
-func (c BmSalesDataResource) NewSalesDataResource(args []BmDataStorage.BmStorage) BmSalesDataResource {
+func (c BmSalesRecordResource) NewSalesRecordResource(args []BmDataStorage.BmStorage) BmSalesRecordResource {
 	var cs *BmDataStorage.BmCityStorage
 	var ps *BmDataStorage.BmProductStorage
-	var sds *BmDataStorage.BmSalesDataStorage
+	var sds *BmDataStorage.BmSalesRecordStorage
 	for _, arg := range args {
 		tp := reflect.ValueOf(arg).Elem().Type()
 		if tp.Name() == "BmCityStorage" {
 			cs = arg.(*BmDataStorage.BmCityStorage)
 		} else if tp.Name() == "BmProductStorage" {
 			ps = arg.(*BmDataStorage.BmProductStorage)
-		} else if tp.Name() == "BmSalesDataStorage" {
-			sds = arg.(*BmDataStorage.BmSalesDataStorage)
+		} else if tp.Name() == "BmSalesRecordStorage" {
+			sds = arg.(*BmDataStorage.BmSalesRecordStorage)
 		}
 	}
-	return BmSalesDataResource{
-		BmCityStorage:      cs,
-		BmProductStorage:   ps,
-		BmSalesDataStorage: sds,
+	return BmSalesRecordResource{
+		BmCityStorage:        cs,
+		BmProductStorage:     ps,
+		BmSalesRecordStorage: sds,
 	}
 }
 
-// FindAll SalesDatas
-func (c BmSalesDataResource) FindAll(r api2go.Request) (api2go.Responder, error) {
-	var result []*BmModel.SalesData
+// FindAll SalesRecords
+func (c BmSalesRecordResource) FindAll(r api2go.Request) (api2go.Responder, error) {
+	var result []*BmModel.SalesRecord
 	_, ok := r.QueryParams["info-id"]
 	if ok {
-		result = c.BmSalesDataStorage.GetAll(r, -1, -1)
+		result = c.BmSalesRecordStorage.GetAll(r, -1, -1)
 		for _, sc := range result {
 			if sc.AddressType == 1 {
 				city, _ := c.BmCityStorage.GetOne(sc.AddressId)
@@ -59,36 +59,36 @@ func (c BmSalesDataResource) FindAll(r api2go.Request) (api2go.Responder, error)
 }
 
 // FindOne choc
-func (c BmSalesDataResource) FindOne(ID string, r api2go.Request) (api2go.Responder, error) {
-	res, err := c.BmSalesDataStorage.GetOne(ID)
+func (c BmSalesRecordResource) FindOne(ID string, r api2go.Request) (api2go.Responder, error) {
+	res, err := c.BmSalesRecordStorage.GetOne(ID)
 	return &Response{Res: res}, err
 }
 
 // Create a new choc
-func (c BmSalesDataResource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
-	choc, ok := obj.(BmModel.SalesData)
+func (c BmSalesRecordResource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
+	choc, ok := obj.(BmModel.SalesRecord)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New("Invalid instance given"), "Invalid instance given", http.StatusBadRequest)
 	}
 
-	id := c.BmSalesDataStorage.Insert(choc)
+	id := c.BmSalesRecordStorage.Insert(choc)
 	choc.ID = id
 	return &Response{Res: choc, Code: http.StatusCreated}, nil
 }
 
 // Delete a choc :(
-func (c BmSalesDataResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
-	err := c.BmSalesDataStorage.Delete(id)
+func (c BmSalesRecordResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
+	err := c.BmSalesRecordStorage.Delete(id)
 	return &Response{Code: http.StatusOK}, err
 }
 
 // Update a choc
-func (c BmSalesDataResource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
-	choc, ok := obj.(BmModel.SalesData)
+func (c BmSalesRecordResource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
+	choc, ok := obj.(BmModel.SalesRecord)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New("Invalid instance given"), "Invalid instance given", http.StatusBadRequest)
 	}
 
-	err := c.BmSalesDataStorage.Update(choc)
+	err := c.BmSalesRecordStorage.Update(choc)
 	return &Response{Res: choc, Code: http.StatusNoContent}, err
 }

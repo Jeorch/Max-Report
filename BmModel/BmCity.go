@@ -5,9 +5,11 @@ import (
 )
 
 type City struct {
-	ID    string        `json:"-"`
-	Id_   bson.ObjectId `json:"-" bson:"_id"`
-	Title string        `json:"title" bson:"TITLE"`
+	ID       string        `json:"-"`
+	Id_      bson.ObjectId `json:"-" bson:"_id"`
+	Title    string        `json:"title" bson:"TITLE"`
+	CityTier int32         `json:"city-tier" bson:"CITY_TIER"`
+	Reliable string        `json:"reliable" bson:"RELIABLE"`
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
