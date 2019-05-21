@@ -11,6 +11,10 @@ storages:
   method: NewProd_etcStorage
   daemons:
   - BmMongodbDaemon
+- name: BmMarketStorage
+  method: NewMarketStorage
+  daemons:
+  - BmMongodbDaemon
 
 resources:
 - name: BmMarketdimensionResource
@@ -22,11 +26,16 @@ resources:
   storages:
   - BmProductdimensionStorage
   - BmProd_etcStorage
+- name: BmMarketResource
+  method: NewMarketResource
+  storages:
+  - BmMarketStorage
 
 models:
 - Marketdimension
 - Productdimension
 - Prod_etc
+- Market
 
 services:
 - name: bm-marketdimension
@@ -35,6 +44,9 @@ services:
 - name: bm-productdimension
   model: BmProductdimension
   resource: BmProductdimensionResource
+- name: bm-market
+  model: BmMarket
+  resource: BmMarketResource
 
 functions:
 # - name: BmUserAgentHandler
@@ -63,12 +75,13 @@ functions:
 #   - name
 
 middlewares:
-# - name: BmCheckTokenMiddleware
-#   create: NewCheckTokenMiddleware
-#   daemons:
-#   - BmRedisDaemon
-#   args:
-#   - 192.168.100.116:9096
+ - name: BmCheckTokenMiddleware
+   create: NewCheckTokenMiddleware
+   daemons:
+   - BmRedisDaemon
+   args:
+#   - 192.168.100.174:9096
+   - oauth.pharbers.com
 
 panic:
   name: BmCommonPanicHandle
@@ -79,12 +92,14 @@ daemons:
   method: NewMongoDBDaemon
   args:
     host: primary
+#    host: 192.168.100.174
     port: 27017
     database: pharbers-max-repository
 - name: BmRedisDaemon
   method: NewRedisDBDaemon
   args:
     host: redis
+#    host: 192.168.100.174
     port: 6379
     password:
     database: 0

@@ -4,26 +4,25 @@ import (
 	//"errors"
 	//"github.com/manyminds/api2go/jsonapi"
 	"gopkg.in/mgo.v2/bson"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 type Productdimension struct {
-	ID						string        `json:"-"`
-	Id_						bson.ObjectId `json:"-" bson:"_id"`
+	ID  string        `json:"-"`
+	Id_ bson.ObjectId `json:"-" bson:"_id"`
 
-	Product_Id  				string     		`json:"product-id" bson:"PRODUCT_ID"`
-	Ym						 	int32	   	 	`json:"ym" bson:"YM"`
-	Market					 	string		`json:"market" bson:"MARKET"`
-	Sales					 	float64		`json:"sales" bson:"SALES"`
-	Company_ID				 	string		`json:"company-id" bson:"COMPANY_ID"`
-	Sales_Som                 	float64		`json:"sales-som" bson:"SALES_SOM"`	
-	Sales_Rank               	int32			`json:"sales-rank" bson:"SALES_RANK"`
-	Sales_Ring_Growth_Rank   	int32			`json:"sales-ring-growth-rank" bson:"SALES_RING_GROWTH_RANK"`
-	Sales_Ring_Growth    	 	float64		`json:"sales-ring-growth" bson:"SALES_RING_GROWTH"`
-	Sales_Year_Growth    	 	float64		`json:"sales-year-growth" bson:"SALES_YEAR_GROWTH"`
-	Product_Name				string 	    `json:"product-name" bson:"MIN_PRODUCT"`
-	
+	ProductId           string  `json:"product-id" bson:"PRODUCT_ID"`
+	Ym                  int32   `json:"ym" bson:"YM"`
+	Market              string  `json:"market" bson:"MARKET"`
+	Sales               float64 `json:"sales" bson:"SALES"`
+	CompanyID           string  `json:"company-id" bson:"COMPANY_ID"`
+	SalesSom            float64 `json:"sales-som" bson:"SALES_SOM"`
+	SalesRank           int32   `json:"sales-rank" bson:"SALES_RANK"`
+	SalesRingGrowthRank int32   `json:"sales-ring-growth-rank" bson:"SALES_RING_GROWTH_RANK"`
+	SalesRingGrowth     float64 `json:"sales-ring-growth" bson:"SALES_RING_GROWTH"`
+	SalesYearGrowth     float64 `json:"sales-year-growth" bson:"SALES_YEAR_GROWTH"`
+	ProductName         string  `json:"product-name" bson:"MIN_PRODUCT"`
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
@@ -49,7 +48,7 @@ func (a *Productdimension) GetConditionsBsonM(parameters map[string][]string) bs
 			k = strings.ToUpper(k)
 			rst[k] = v[0]
 		case "sales_rank":
-			val, err:= strconv.Atoi(v[0])
+			val, err := strconv.Atoi(v[0])
 			if err != nil {
 				panic(err.Error())
 			}
@@ -58,7 +57,7 @@ func (a *Productdimension) GetConditionsBsonM(parameters map[string][]string) bs
 
 		case "ym":
 			k = strings.ToUpper(k)
-			ym,_ := strconv.Atoi(v[0])
+			ym, _ := strconv.Atoi(v[0])
 			rst[k] = ym
 		case "lte[sales_rank]":
 			val, err := strconv.Atoi(v[0])
@@ -94,7 +93,7 @@ func (a *Productdimension) GetConditionsBsonM(parameters map[string][]string) bs
 				panic(err.Error())
 			}
 			ymr["$lt"] = val
-			rst["YM"] =ymr
+			rst["YM"] = ymr
 		case "lte[ym]":
 			val, err := strconv.Atoi(v[0])
 			if err != nil {
