@@ -1,7 +1,8 @@
 models:
 - Marketdimension
 - Productdimension
-- Prod_etc
+- Marketaggregation
+- Productaggregation
 - Market
 - City
 - Product
@@ -18,8 +19,12 @@ storages:
   method: NewProductdimensionStorage
   daemons:
   - BmMongodbDaemon
-- name: BmProd_etcStorage
-  method: NewProd_etcStorage
+- name: BmProductaggdataStorage
+  method: NewStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmMarketaggdataStorage
+  method: NewStorage
   daemons:
   - BmMongodbDaemon
 - name: BmMarketStorage
@@ -27,7 +32,7 @@ storages:
   daemons:
   - BmMongodbDaemon
 - name: BmCityStorage
-  method: NewCityStorage
+  method: NewStorage
   daemons:
   - BmMongodbDaemon
 - name: BmProductStorage
@@ -56,7 +61,14 @@ resources:
   method: NewProductdimensionResource
   storages:
   - BmProductdimensionStorage
-  - BmProd_etcStorage
+- name: BmProductaggdataResource
+  method: NewResource
+  storages:
+  - BmProductaggdataStorage
+- name: BmMarketaggdataResource
+  method: NewResource
+  storages:
+  - BmMarketaggdataStorage
 - name: BmMarketResource
   method: NewMarketResource
   storages:
@@ -84,6 +96,12 @@ services:
 - name: bm-productdimension
   model: BmProductdimension
   resource: BmProductdimensionResource
+- name: bm-marketaggregation
+  model: BmMarketaggregation
+  resource: BmMarketaggdataResource
+- name: bm-productaggregation
+  model: BmProductaggregation
+  resource: BmProductaggdataResource
 - name: bm-market
   model: BmMarket
   resource: BmMarketResource
@@ -124,12 +142,13 @@ functions:
 #   - name
 
 middlewares:
-# - name: BmCheckTokenMiddleware
-#   create: NewCheckTokenMiddleware
-#   daemons:
-#   - BmRedisDaemon
-#   args:
-#   - 192.168.100.116:9096
+ - name: BmCheckTokenMiddleware
+   create: NewCheckTokenMiddleware
+   daemons:
+   - BmRedisDaemon
+   args:
+#   - 192.168.100.174:9096
+   - oauth.pharbers.com
 
 panic:
   name: BmCommonPanicHandle
@@ -139,15 +158,15 @@ daemons:
 - name: BmMongodbDaemon
   method: NewMongoDBDaemon
   args:
-    host: 123.56.179.133
-    port: 5555
-#    host: primary
-#    port: 27017
+    host: primary
+#    host: 192.168.100.174
+    port: 27017
     database: pharbers-max-repository
 - name: BmRedisDaemon
   method: NewRedisDBDaemon
   args:
     host: redis
+#    host: 192.168.100.174
     port: 6379
     password:
     database: 0

@@ -15,7 +15,7 @@ type BmCityStorage struct {
 	db *BmMongodb.BmMongodb
 }
 
-func (s BmCityStorage) NewCityStorage(args []BmDaemons.BmDaemon) *BmCityStorage {
+func (s BmCityStorage) NewStorage(args []BmDaemons.BmDaemon) *BmCityStorage {
 	mdb := args[0].(*BmMongodb.BmMongodb)
 	return &BmCityStorage{mdb}
 }

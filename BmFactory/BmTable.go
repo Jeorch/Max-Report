@@ -3,11 +3,11 @@ package BmFactory
 import (
 	"github.com/PharbersDeveloper/Max-Report/BmDataStorage"
 	"github.com/PharbersDeveloper/Max-Report/BmHandler"
+	"github.com/PharbersDeveloper/Max-Report/BmMiddleware"
 	"github.com/PharbersDeveloper/Max-Report/BmModel"
 	"github.com/PharbersDeveloper/Max-Report/BmResource"
-	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
-	"github.com/PharbersDeveloper/Max-Report/BmMiddleware"
+	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
 )
 
 type BmTable struct{}
@@ -15,7 +15,8 @@ type BmTable struct{}
 var BLACKMIRROR_MODEL_FACTORY = map[string]interface{}{
 	"BmProductdimension": BmModel.Productdimension{},
 	"BmMarketdimension":  BmModel.Marketdimension{},
-	"BmProd_etc":         BmModel.Prod_etc{},
+	"BmProductaggregation":   BmModel.Productaggregation{},
+	"BmMarketaggregation":    BmModel.Marketaggregation{},
 	"BmMarket":           BmModel.Market{},
 	"BmCity":             BmModel.City{},
 	"BmProduct":          BmModel.Product{},
@@ -24,11 +25,12 @@ var BLACKMIRROR_MODEL_FACTORY = map[string]interface{}{
 	"BmSalesRecord":      BmModel.SalesRecord{},
 }
 
-var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
-	"BmProductdimensionStorage": BmDataStorage.BmProductdimensionStorage{},
-	"BmMarketdimensionStorage":  BmDataStorage.BmMarketdimensionStorage{},
-	"BmProd_etcStorage":         BmDataStorage.BmProd_etcStorage{},
-	"BmMarketStorage":           BmDataStorage.BmMarketStorage{},
+var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
+	"BmProductdimensionResource": BmResource.BmProductdimensionResource{},
+	"BmMarketdimensionResource":  BmResource.BmMarketdimensionResource{},
+	"BmProductaggdataResource":   BmResource.BmProductaggdataResource{},
+	"BmMarketaggdataResource":    BmResource.BmMarketaggdataResource{},
+	"BmMarketResource":           BmResource.BmMarketResource{},
 	"BmCityStorage":             BmDataStorage.BmCityStorage{},
 	"BmProductStorage":          BmDataStorage.BmProductStorage{},
 	"BmOverallInfoStorage":      BmDataStorage.BmOverallInfoStorage{},
@@ -36,10 +38,12 @@ var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
 	"BmSalesRecordStorage":      BmDataStorage.BmSalesRecordStorage{},
 }
 
-var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
-	"BmProductdimensionResource": BmResource.BmProductdimensionResource{},
-	"BmMarketdimensionResource":  BmResource.BmMarketdimensionResource{},
-	"BmMarketResource":           BmResource.BmMarketResource{},
+var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
+	"BmProductdimensionStorage": BmDataStorage.BmProductdimensionStorage{},
+	"BmMarketdimensionStorage":  BmDataStorage.BmMarketdimensionStorage{},
+	"BmProductaggdataStorage":   BmDataStorage.BmProductaggdataStorage{},
+	"BmMarketaggdataStorage":    BmDataStorage.BmMarketaggdataStorage{},
+	"BmMarketStorage":           BmDataStorage.BmMarketStorage{},
 	"BmOverallInfoResource":      BmResource.BmOverallInfoResource{},
 	"BmSampleCoverResource":      BmResource.BmSampleCoverResource{},
 	"BmSalesRecordResource":      BmResource.BmSalesRecordResource{},

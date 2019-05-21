@@ -10,7 +10,7 @@ import (
 	"github.com/manyminds/api2go"
 )
 
-// BmMarketStorage stores all Markets
+// BmMarketStorage stores all Marketes
 type BmMarketStorage struct {
 	db *BmMongodb.BmMongodb
 }
