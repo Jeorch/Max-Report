@@ -46,6 +46,8 @@ func (a *SalesRecord) SetID(id string) error {
 
 func (a *SalesRecord) GetConditionsBsonM(parameters map[string][]string) bson.M {
 	rst := make(map[string]interface{})
+	ymr := make(map[string]interface{})
+
 	for k, v := range parameters {
 		switch k {
 		case "info-id":
@@ -54,6 +56,12 @@ func (a *SalesRecord) GetConditionsBsonM(parameters map[string][]string) bson.M 
 			rst["DATE_TYPE"], _ = strconv.Atoi(v[0])
 		case "date":
 			rst["DATE"] = v[0]
+		case "lte[date]":
+			ymr["$lte"] = v[0]
+			rst["DATE"] = ymr
+		case "gte[date]":
+			ymr["$gte"] = v[0]
+			rst["DATE"] = ymr
 		case "address-type":
 			rst["ADDRESS_TYPE"], _ = strconv.Atoi(v[0])
 		case "address-id":
@@ -61,9 +69,22 @@ func (a *SalesRecord) GetConditionsBsonM(parameters map[string][]string) bson.M 
 		case "goods-type":
 			rst["GOODS_TYPE"], _ = strconv.Atoi(v[0])
 		case "goods-id":
-			rst["GOODS_ID"] = v[0]
+			r := make(map[string]interface{})
+			var values []string
+			for i := 0; i < len(v); i++ {
+				values = append(values, v[i])
+			}
+			r["$in"] = values
+			rst["GOODS_ID"] = r
 		case "value-type":
-			rst["VALUE_TYPE"], _ = strconv.Atoi(v[0])
+			r := make(map[string]interface{})
+			var values []int
+			for i := 0; i < len(v); i++ {
+				value, _ := strconv.Atoi(v[i])
+				values = append(values, value)
+			}
+			r["$in"] = values
+			rst["VALUE_TYPE"] = r
 		}
 	}
 	return rst
