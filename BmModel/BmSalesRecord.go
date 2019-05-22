@@ -77,8 +77,8 @@ func (a SalesRecord) GetReferences() []jsonapi.Reference {
 			Name: "city",
 		},
 		{
-			Type: "goods",
-			Name: "goods",
+			Type: "products",
+			Name: "product",
 		},
 	}
 }
@@ -98,8 +98,8 @@ func (a SalesRecord) GetReferencedIDs() []jsonapi.ReferenceID {
 	if a.GoodsType == 1 {
 		result = append(result, jsonapi.ReferenceID{
 			ID:   a.GoodsId,
-			Type: "goods",
-			Name: "goods",
+			Type: "products",
+			Name: "product",
 		})
 	}
 
@@ -125,7 +125,7 @@ func (a *SalesRecord) SetToOneReferenceID(name, ID string) error {
 	if name == "city" {
 		a.AddressId = ID
 		return nil
-	} else if name == "goods" {
+	} else if name == "product" {
 		a.GoodsId = ID
 		return nil
 	}
