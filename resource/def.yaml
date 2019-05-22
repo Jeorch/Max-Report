@@ -5,6 +5,8 @@ models:
 - Productaggregation
 - Market
 - City
+- Province
+- Region
 - Product
 - OverallInfo
 - AvailableAddress
@@ -34,6 +36,14 @@ storages:
   daemons:
   - BmMongodbDaemon
 - name: BmCityStorage
+  method: NewStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmProvinceStorage
+  method: NewStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmRegionStorage
   method: NewStorage
   daemons:
   - BmMongodbDaemon
@@ -87,6 +97,14 @@ resources:
   method: NewResource
   storages:
   - BmCityStorage
+- name: BmProvinceResource
+  method: NewResource
+  storages:
+  - BmProvinceStorage
+- name: BmRegionResource
+  method: NewResource
+  storages:
+  - BmRegionStorage
 - name: BmOverallInfoResource
   method: NewOverallInfoResource
   storages:
@@ -131,6 +149,12 @@ services:
 - name: bm-city
   model: BmCity
   resource: BmCityResource
+- name: bm-province
+  model: BmProvince
+  resource: BmProvinceResource
+- name: bm-region
+  model: BmRegion
+  resource: BmRegionResource
 - name: bm-overallInfo
   model: BmOverallInfo
   resource: BmOverallInfoResource
@@ -190,11 +214,9 @@ daemons:
 - name: BmMongodbDaemon
   method: NewMongoDBDaemon
   args:
-#    host: primary
+    host: primary
 #    host: 192.168.100.174
-#    port: 27017
-    host: 123.56.179.133
-    port: 5555
+    port: 27017
     database: pharbers-max-repository
 - name: BmRedisDaemon
   method: NewRedisDBDaemon
