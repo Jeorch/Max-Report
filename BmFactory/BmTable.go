@@ -13,28 +13,18 @@ import (
 type BmTable struct{}
 
 var BLACKMIRROR_MODEL_FACTORY = map[string]interface{}{
-	"BmProductdimension": BmModel.Productdimension{},
-	"BmMarketdimension":  BmModel.Marketdimension{},
-	"BmProductaggregation":   BmModel.Productaggregation{},
-	"BmMarketaggregation":    BmModel.Marketaggregation{},
-	"BmMarket":           BmModel.Market{},
-	"BmCity":             BmModel.City{},
-	"BmProduct":          BmModel.Product{},
-	"BmOverallInfo":      BmModel.OverallInfo{},
-	"BmSampleCover":      BmModel.SampleCover{},
-	"BmSalesRecord":      BmModel.SalesRecord{},
-}
-
-var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
-	"BmProductdimensionResource": BmResource.BmProductdimensionResource{},
-	"BmMarketdimensionResource":  BmResource.BmMarketdimensionResource{},
-	"BmProductaggdataResource":   BmResource.BmProductaggdataResource{},
-	"BmMarketaggdataResource":    BmResource.BmMarketaggdataResource{},
-	"BmMarketResource":           BmResource.BmMarketResource{},
-	"BmOverallInfoResource":      BmResource.BmOverallInfoResource{},
-	"BmSampleCoverResource":      BmResource.BmSampleCoverResource{},
-	"BmSalesRecordResource":      BmResource.BmSalesRecordResource{},
-
+	"BmProductdimension":   BmModel.Productdimension{},
+	"BmMarketdimension":    BmModel.Marketdimension{},
+	"BmProductaggregation": BmModel.Productaggregation{},
+	"BmMarketaggregation":  BmModel.Marketaggregation{},
+	"BmMarket":             BmModel.Market{},
+	"BmCity":               BmModel.City{},
+	"BmProduct":            BmModel.Product{},
+	"BmOverallInfo":        BmModel.OverallInfo{},
+	"BmAvailableCity":      BmModel.AvailableCity{},
+	"BmAvailableDate":      BmModel.AvailableDate{},
+	"BmSampleCover":        BmModel.SampleCover{},
+	"BmSalesRecord":        BmModel.SalesRecord{},
 }
 
 var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
@@ -46,8 +36,23 @@ var BLACKMIRROR_STORAGE_FACTORY = map[string]interface{}{
 	"BmCityStorage":             BmDataStorage.BmCityStorage{},
 	"BmProductStorage":          BmDataStorage.BmProductStorage{},
 	"BmOverallInfoStorage":      BmDataStorage.BmOverallInfoStorage{},
+	"BmAvailableCityStorage":    BmDataStorage.BmAvailableCityStorage{},
+	"BmAvailableDateStorage":    BmDataStorage.BmAvailableDateStorage{},
 	"BmSampleCoverStorage":      BmDataStorage.BmSampleCoverStorage{},
 	"BmSalesRecordStorage":      BmDataStorage.BmSalesRecordStorage{},
+}
+
+var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
+	"BmProductdimensionResource": BmResource.BmProductdimensionResource{},
+	"BmMarketdimensionResource":  BmResource.BmMarketdimensionResource{},
+	"BmProductaggdataResource":   BmResource.BmProductaggdataResource{},
+	"BmMarketaggdataResource":    BmResource.BmMarketaggdataResource{},
+	"BmMarketResource":           BmResource.BmMarketResource{},
+	"BmOverallInfoResource":      BmResource.BmOverallInfoResource{},
+	"BmAvailableCityResource":    BmResource.BmAvailableCityResource{},
+	"BmAvailableDateResource":    BmResource.BmAvailableDateResource{},
+	"BmSampleCoverResource":      BmResource.BmSampleCoverResource{},
+	"BmSalesRecordResource":      BmResource.BmSalesRecordResource{},
 }
 
 var BLACKMIRROR_MIDDLEWARE_FACTORY = map[string]interface{}{

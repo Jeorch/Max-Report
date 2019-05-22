@@ -16,11 +16,11 @@ type SalesRecord struct {
 	DateType int32  `json:"date-type" bson:"DATE_TYPE"`
 	Date     string `json:"date" bson:"DATE"`
 
-	// 0 => Total ; 1 => City ; 2 => Province ; 3 => Region ;
+	// 0 => Total ; 1 => City ; 2 => Province ; 3 => Region ; 4 => Hospital ;
 	AddressType int32  `json:"address-type" bson:"ADDRESS_TYPE"`
 	AddressId   string `json:"address-id" bson:"ADDRESS_ID"`
 
-	// 0 => Total ; 1 => Product ; 2 => Mole ; 3 => Market ;
+	// 0 => Total ; 1 => Product ; 2 => Mole ; 3 => Corp_Name ; 4 => Market ; 5 => OAD
 	GoodsType int32  `json:"goods-type" bson:"GOODS_TYPE"`
 	GoodsId   string `json:"goods-id" bson:"GOODS_ID"`
 

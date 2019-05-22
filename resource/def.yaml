@@ -7,6 +7,8 @@ models:
 - City
 - Product
 - OverallInfo
+- AvailableCity
+- AvailableDate
 - SampleCover
 - SalesRecord
 
@@ -43,6 +45,14 @@ storages:
   method: NewOverallInfoStorage
   daemons:
   - BmMongodbDaemon
+- name: BmAvailableCityStorage
+  method: NewStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmAvailableDateStorage
+  method: NewStorage
+  daemons:
+  - BmMongodbDaemon
 - name: BmSampleCoverStorage
   method: NewSampleCoverStorage
   daemons:
@@ -77,6 +87,15 @@ resources:
   method: NewOverallInfoResource
   storages:
   - BmOverallInfoStorage
+- name: BmAvailableCityResource
+  method: NewResource
+  storages:
+  - BmCityStorage
+  - BmAvailableCityStorage
+- name: BmAvailableDateResource
+  method: NewResource
+  storages:
+  - BmAvailableDateStorage
 - name: BmSampleCoverResource
   method: NewSampleCoverResource
   storages:
@@ -108,6 +127,12 @@ services:
 - name: bm-overallInfo
   model: BmOverallInfo
   resource: BmOverallInfoResource
+- name: bm-availableCity
+  model: BmAvailableCity
+  resource: BmAvailableCityResource
+- name: bm-availableDate
+  model: BmAvailableDate
+  resource: BmAvailableDateResource
 - name: bm-sampleCover
   model: BmSampleCover
   resource: BmSampleCoverResource
@@ -158,9 +183,11 @@ daemons:
 - name: BmMongodbDaemon
   method: NewMongoDBDaemon
   args:
-    host: primary
+#    host: primary
 #    host: 192.168.100.174
-    port: 27017
+#    port: 27017
+    host: 123.56.179.133
+    port: 5555
     database: pharbers-max-repository
 - name: BmRedisDaemon
   method: NewRedisDBDaemon
