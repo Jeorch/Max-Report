@@ -106,6 +106,10 @@ func (a *Productaggregation) GetConditionsBsonM(parameters map[string][]string) 
 			}
 			ymr["$gte"] = val
 			rst["YM"] = ymr
+		case "min-product-names":
+			r:=make(map[string]interface{})
+			r["$in"]=v
+			rst["MIN_PRODUCT"] = r
 		}
 
 	}

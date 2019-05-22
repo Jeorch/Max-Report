@@ -37,6 +37,30 @@ func (c BmProductaggdataResource) FindAll(r api2go.Request) (api2go.Responder, e
 		result := c.BmProductaggdataStorage.GetAll(r, skip, take)
 		return &Response{Res: result}, nil
 	}
+
+	_, cok := r.QueryParams["current[ym]"]
+	if cok {
+		gteYM := r.QueryParams["gte[ym]"]
+		lteYM := r.QueryParams["lte[ym]"]
+		delete(r.QueryParams, "gte[ym]")
+		delete(r.QueryParams, "lte[ym]")
+		r.QueryParams["ym"] = r.QueryParams["current[ym]"]
+		results := c.BmProductaggdataStorage.GetAll(r, -1, -1)
+		minProdNames := make([]string, 0)
+		for _, v := range results {
+			minProdNames = append(minProdNames, v.MinProduct)
+		}
+		r.QueryParams["min-product-names"] = minProdNames
+		delete(r.QueryParams, "ym")
+		delete(r.QueryParams, "current[ym]")
+		delete(r.QueryParams, "lte[sales_rank]")
+		r.QueryParams["gte[ym]"] = gteYM
+		r.QueryParams["lte[ym]"] = lteYM
+		r.QueryParams["orderby"] = []string{"PRODUCT_NAME"}
+		result := c.BmProductaggdataStorage.GetAll(r, -1, -1)
+		return &Response{Res: result}, nil
+	}
+
 	result := c.BmProductaggdataStorage.GetAll(r,-1,-1)
 	return &Response{Res: result}, nil
 }

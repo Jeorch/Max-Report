@@ -2,7 +2,7 @@ FROM golang:alpine
 
 RUN apk add --no-cache git mercurial
 
-LABEL Max-Report.version="1.0.9" maintainer="PharbersDevelopers"
+LABEL Max-Report.version="1.0.10" maintainer="PharbersDevelopers"
 
 ENV MAXVIEW_HOME /go/bin
 
