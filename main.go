@@ -3,15 +3,14 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/PharbersDeveloper/Max-Report/BmFactory"
+	"github.com/PharbersDeveloper/Max-Report/BmMaxDefine"
 	"github.com/alfredyang1986/BmServiceDef/BmApiResolver"
 	"github.com/alfredyang1986/BmServiceDef/BmConfig"
-	"github.com/PharbersDeveloper/Max-Report/BmMaxDefine"
 	"github.com/julienschmidt/httprouter"
 	"github.com/manyminds/api2go"
-	//"os"
-	"os"
 )
 
 func main() {
@@ -23,7 +22,9 @@ func main() {
 	pod.RegisterSerFromYAML("resource/def.yaml")
 
 	var bmRouter BmConfig.BmRouterConfig
+	//本地测试使用
 	os.Setenv("MAXVIEW_HOME", ".")
+
 	bmRouter.GenerateConfig("MAXVIEW_HOME")
 	addr := bmRouter.Host + ":" + bmRouter.Port
 	fmt.Println("Listening on ", addr)
