@@ -48,6 +48,7 @@ var BLACKMIRROR_RESOURCE_FACTORY = map[string]interface{}{
 	"BmProductaggdataResource":   BmResource.BmProductaggdataResource{},
 	"BmMarketaggdataResource":    BmResource.BmMarketaggdataResource{},
 	"BmMarketResource":           BmResource.BmMarketResource{},
+	"BmCityResource":           BmResource.BmCityResource{},
 	"BmOverallInfoResource":      BmResource.BmOverallInfoResource{},
 	"BmAvailableAddressResource": BmResource.BmAvailableAddressResource{},
 	"BmAvailableDateResource":    BmResource.BmAvailableDateResource{},

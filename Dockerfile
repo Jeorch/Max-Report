@@ -2,9 +2,9 @@ FROM golang:alpine
 
 RUN apk add --no-cache git mercurial
 
-LABEL Max-Report.version="1.0.7" maintainer="Pharber"
+LABEL Max-Report.version="1.0.9" maintainer="PharbersDevelopers"
 
-ENV BM_HOME /go/bin
+ENV MAXVIEW_HOME /go/bin
 
 RUN go get github.com/alfredyang1986/blackmirror && \
 go get github.com/alfredyang1986/BmServiceDef && \

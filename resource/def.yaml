@@ -83,6 +83,10 @@ resources:
   method: NewMarketResource
   storages:
   - BmMarketStorage
+- name: BmCityResource
+  method: NewResource
+  storages:
+  - BmCityStorage
 - name: BmOverallInfoResource
   method: NewOverallInfoResource
   storages:
@@ -124,6 +128,9 @@ services:
 - name: bm-market
   model: BmMarket
   resource: BmMarketResource
+- name: bm-city
+  model: BmCity
+  resource: BmCityResource
 - name: bm-overallInfo
   model: BmOverallInfo
   resource: BmOverallInfoResource
