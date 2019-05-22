@@ -4,9 +4,10 @@ import (
 	"errors"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/manyminds/api2go/jsonapi"
+	"strconv"
 )
 
-type AvailableCity struct {
+type AvailableAddress struct {
 	ID          string        `json:"-"`
 	Id_         bson.ObjectId `json:"-" bson:"_id"`
 	InfoId      string        `json:"info-id" bson:"INFO_ID"`
@@ -17,29 +18,31 @@ type AvailableCity struct {
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
-func (a AvailableCity) GetID() string {
+func (a AvailableAddress) GetID() string {
 	return a.ID
 }
 
 // SetID to satisfy jsonapi.UnmarshalIdentifier interface
-func (a *AvailableCity) SetID(id string) error {
+func (a *AvailableAddress) SetID(id string) error {
 	a.ID = id
 	return nil
 }
 
-func (a *AvailableCity) GetConditionsBsonM(parameters map[string][]string) bson.M {
+func (a *AvailableAddress) GetConditionsBsonM(parameters map[string][]string) bson.M {
 	rst := make(map[string]interface{})
 	for k, v := range parameters {
 		switch k {
-		case "title":
-			rst["TITLE"] = v[0]
+		case "info-id":
+			rst["INFO_ID"] = v[0]
+		case "address-type":
+			rst["ADDRESS_TYPE"], _ = strconv.Atoi(v[0])
 		}
 	}
 	return rst
 }
 
 // GetReferences to satisfy the jsonapi.MarshalReferences interface
-func (a AvailableCity) GetReferences() []jsonapi.Reference {
+func (a AvailableAddress) GetReferences() []jsonapi.Reference {
 	return []jsonapi.Reference{
 		{
 			Type: "cities",
@@ -49,7 +52,7 @@ func (a AvailableCity) GetReferences() []jsonapi.Reference {
 }
 
 // GetReferencedIDs to satisfy the jsonapi.MarshalLinkedRelations interface
-func (a AvailableCity) GetReferencedIDs() []jsonapi.ReferenceID {
+func (a AvailableAddress) GetReferencedIDs() []jsonapi.ReferenceID {
 	var result []jsonapi.ReferenceID
 
 	if a.AddressType == 1 {
@@ -64,7 +67,7 @@ func (a AvailableCity) GetReferencedIDs() []jsonapi.ReferenceID {
 }
 
 // GetReferencedStructs to satisfy the jsonapi.MarhsalIncludedRelations interface
-func (a AvailableCity) GetReferencedStructs() []jsonapi.MarshalIdentifier {
+func (a AvailableAddress) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 	var result []jsonapi.MarshalIdentifier
 
 	if a.AddressType == 1 && a.City != nil {
@@ -74,7 +77,7 @@ func (a AvailableCity) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 	return result
 }
 
-func (a *AvailableCity) SetToOneReferenceID(name, ID string) error {
+func (a *AvailableAddress) SetToOneReferenceID(name, ID string) error {
 	if name == "city" {
 		a.AddressId = ID
 		return nil

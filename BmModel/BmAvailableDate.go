@@ -2,6 +2,7 @@ package BmModel
 
 import (
 	"gopkg.in/mgo.v2/bson"
+	"strconv"
 )
 
 type AvailableDate struct {
@@ -27,8 +28,10 @@ func (a *AvailableDate) GetConditionsBsonM(parameters map[string][]string) bson.
 	rst := make(map[string]interface{})
 	for k, v := range parameters {
 		switch k {
-		case "title":
-			rst["TITLE"] = v[0]
+		case "info-id":
+			rst["INFO_ID"] = v[0]
+		case "date-type":
+			rst["DATE_TYPE"], _ = strconv.Atoi(v[0])
 		}
 	}
 	return rst

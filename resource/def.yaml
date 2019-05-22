@@ -7,7 +7,7 @@ models:
 - City
 - Product
 - OverallInfo
-- AvailableCity
+- AvailableAddress
 - AvailableDate
 - SampleCover
 - SalesRecord
@@ -45,7 +45,7 @@ storages:
   method: NewOverallInfoStorage
   daemons:
   - BmMongodbDaemon
-- name: BmAvailableCityStorage
+- name: BmAvailableAddressStorage
   method: NewStorage
   daemons:
   - BmMongodbDaemon
@@ -87,11 +87,11 @@ resources:
   method: NewOverallInfoResource
   storages:
   - BmOverallInfoStorage
-- name: BmAvailableCityResource
+- name: BmAvailableAddressResource
   method: NewResource
   storages:
   - BmCityStorage
-  - BmAvailableCityStorage
+  - BmAvailableAddressStorage
 - name: BmAvailableDateResource
   method: NewResource
   storages:
@@ -128,8 +128,8 @@ services:
   model: BmOverallInfo
   resource: BmOverallInfoResource
 - name: bm-availableCity
-  model: BmAvailableCity
-  resource: BmAvailableCityResource
+  model: BmAvailableAddress
+  resource: BmAvailableAddressResource
 - name: bm-availableDate
   model: BmAvailableDate
   resource: BmAvailableDateResource
