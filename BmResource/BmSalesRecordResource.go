@@ -42,25 +42,31 @@ func (c BmSalesRecordResource) FindAll(r api2go.Request) (api2go.Responder, erro
 	var result []*BmModel.SalesRecord
 	_, ok := r.QueryParams["info-id"]
 	if ok {
+		var skip, take int
+
 		skipArgs, sok := r.QueryParams["skip"]
 		takeArgs, tok := r.QueryParams["take"]
-		if sok && tok {
-			skip, _ := strconv.Atoi(skipArgs[0])
-			take, _ := strconv.Atoi(takeArgs[0])
-			result := c.BmSalesRecordStorage.GetAll(r, skip, take)
-			for _, sc := range result {
-				if sc.AddressType == 1 {
-					city, _ := c.BmCityStorage.GetOne(sc.AddressId)
-					sc.City = &city
-				}
 
-				if sc.GoodsType == 1 {
-					product, _ := c.BmProductStorage.GetOne(sc.GoodsId)
-					sc.Product = &product
-				}
-			}
-			return &Response{Res: result}, nil
+		if sok && tok {
+			skip, _ = strconv.Atoi(skipArgs[0])
+			take, _ = strconv.Atoi(takeArgs[0])
+		} else {
+			skip = 0
+			take = 10
 		}
+
+		result := c.BmSalesRecordStorage.GetAll(r, skip, take)
+		for _, sc := range result {
+			if sc.AddressType == 1 {
+				city, _ := c.BmCityStorage.GetOne(sc.AddressId)
+				sc.City = &city
+			}
+			if sc.GoodsType == 1 {
+				product, _ := c.BmProductStorage.GetOne(sc.GoodsId)
+				sc.Product = &product
+			}
+		}
+		return &Response{Res: result}, nil
 	}
 	return &Response{Res: result}, nil
 }
