@@ -9,6 +9,7 @@ models:
 - Region
 - Product
 - OverallInfo
+- Overview
 - AvailableAddress
 - AvailableDate
 - SampleCover
@@ -53,6 +54,10 @@ storages:
   - BmMongodbDaemon
 - name: BmOverallInfoStorage
   method: NewOverallInfoStorage
+  daemons:
+  - BmMongodbDaemon
+- name: BmOverviewStorage
+  method: NewStorage
   daemons:
   - BmMongodbDaemon
 - name: BmAvailableAddressStorage
@@ -109,6 +114,10 @@ resources:
   method: NewOverallInfoResource
   storages:
   - BmOverallInfoStorage
+- name: BmOverviewResource
+  method: NewResource
+  storages:
+  - BmOverviewStorage
 - name: BmAvailableAddressResource
   method: NewResource
   storages:
@@ -158,6 +167,9 @@ services:
 - name: bm-overallInfo
   model: BmOverallInfo
   resource: BmOverallInfoResource
+- name: bm-overview
+  model: BmOverview
+  resource: BmOverviewResource
 - name: bm-availableCity
   model: BmAvailableAddress
   resource: BmAvailableAddressResource
