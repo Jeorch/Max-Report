@@ -15,6 +15,7 @@ type Marketaggregation struct {
 	Market             string  `json:"market" bson:"MARKET"`
 	Address            string  `json:"address" bson:"ADDRESS"`
 	AddressType        string  `json:"address-type" bson:"ADDRESS_TYPE"`
+	Tier               string  `json:"tier" bson:"TIER"`
 	Ym                 int32   `json:"ym" bson:"YM"`
 	YmType             string  `json:"ym-type" bson:"YM_TYPE"`
 	ProductCount       int64   `json:"product-count" bson:"PRODUCT_COUNT"`

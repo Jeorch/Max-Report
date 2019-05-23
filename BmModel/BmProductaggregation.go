@@ -19,6 +19,7 @@ type Productaggregation struct {
 	YmType             string  `json:"ym-type" bson:"YM_TYPE"`
 	Address            string  `json:"address" bson:"ADDRESS"`
 	AddressType        string  `json:"address-type" bson:"ADDRESS_TYPE"`
+	Tier               string  `json:"tier" bson:"TIER"`
 	Market             string  `json:"market" bson:"MARKET"`
 	Sales              float64 `json:"sales" bson:"SALES"`
 	CompanyID          string  `json:"company-id" bson:"COMPANY_ID"`
@@ -107,8 +108,8 @@ func (a *Productaggregation) GetConditionsBsonM(parameters map[string][]string) 
 			ymr["$gte"] = val
 			rst["YM"] = ymr
 		case "min-product-names":
-			r:=make(map[string]interface{})
-			r["$in"]=v
+			r := make(map[string]interface{})
+			r["$in"] = v
 			rst["MIN_PRODUCT"] = r
 		}
 
