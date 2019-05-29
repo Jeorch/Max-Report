@@ -229,6 +229,8 @@ daemons:
     host: primary
 #    host: 192.168.100.174
     port: 27017
+    user: pharbers
+    pass: pharbers2019
     database: pharbers-max-repository
 - name: BmRedisDaemon
   method: NewRedisDBDaemon
