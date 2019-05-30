@@ -238,5 +238,5 @@ daemons:
     host: redis
 #    host: 192.168.100.174
     port: 6379
-    password:
+    password: pharbers
     database: 0
